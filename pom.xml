@@ -6,7 +6,7 @@
     <groupId>server-boilerplate</groupId>
     <artifactId>server</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <modules>
         <module>server-dao</module>
@@ -177,6 +177,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.0</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -199,5 +200,16 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/133269-release-yZkzXk/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://repo.rdc.aliyun.com/repository/133269-snapshot-4l3VkR/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
