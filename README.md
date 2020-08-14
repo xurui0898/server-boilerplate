@@ -5,7 +5,7 @@
 
 在根目录的`pom.xml`中配置dev、beta、prod环境变量，然后在SpringBoot的配置文件中引用maven的profile属性。
 
-[参考](http://blog.csdn.net/lihe2008125/article/details/50443491) 
+[参考文档](http://blog.csdn.net/lihe2008125/article/details/50443491) 
 
 ## 数据库操作 —— MyBatis
 
@@ -33,11 +33,10 @@
 
 无它，唯一需要配置的就是日志输出位置，此脚手架中支持在SpringBoot中配置日志输出位置，这种配置对开发测试阶段更加友好，避免了日志文件满天飞的情况。
 
-## 标准化发布
+## 部署与发布
 
-不再采用传统的tomcat发布，模仿\*nix的应用目录结构，即：
+使用docker构建Java8环境，将server-api打包jar文件映射到容器内/app.jar即可。
 
-  + **bin**：应用控制入口 
-  + **conf**：应用配置
-  + **logs**：日志输出
-  + **static**：一些静态资源
+参考文档以beta环境打包为例，因为beta环境配置的MySQL链接是宿主机的IP。
+
+参考文档：[Dockerfile构建java8环境](https://www.yuque.com/docs/share/6b1dedf2-615b-42cf-91b3-47427b5db71b) 
