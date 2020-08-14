@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="30 seconds">
-
     <springProperty name="LOG_PATH" source="logging.path"/>
-    <property name="maxHistory" value="30"/>
-
-    <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_PATH}/mybatis.log</File>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/mybatis.%d{yyyy-MM-dd-HH}.log</fileNamePattern>
-        </rollingPolicy>
-        <encoder>
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} %p [%t][%X{traceId}] - %m%n</Pattern>
-        </encoder>
-    </appender>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%logger] - %.-1024msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--配置日志文件-->
+    <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--滚动日志 基于时间和文件大小-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 滚动日志文件保存格式 -->
+            <FileNamePattern>${LOG_PATH}/mybatis.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>200MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>7</MaxHistory>
+        </rollingPolicy>
+        <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--滚动日志 基于时间和文件大小-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 滚动日志文件保存格式 -->
+            <FileNamePattern>${LOG_PATH}/application.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxFileSize>200MB</MaxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+            <MaxHistory>7</MaxHistory>
+        </rollingPolicy>
+        <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %logger{50} - %msg%n
+            </pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -28,5 +51,6 @@
 
     <root level="INFO">
         <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
     </root>
 </configuration>
