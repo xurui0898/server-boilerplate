@@ -31,7 +31,10 @@ public class IndexController {
     }
 
     @RequestMapping("account")
-    public Object account() {
+    public Object account(UserInfo userInfo) {
+        log.info(String.valueOf(userInfo.getUserId()));
+        log.info(userInfo.getUserName());
+
         AccountExample accountExample = new AccountExample();
         return accountMapper.selectByExample(accountExample);
     }
