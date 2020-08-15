@@ -7,7 +7,6 @@ import org.mybatis.generator.internal.DefaultCommentGenerator;
 
 /**
  * 自动注释生成器
- * Created by sulin on 16/6/10.
  */
 public class MyBatisCommentGenerator extends DefaultCommentGenerator {
 

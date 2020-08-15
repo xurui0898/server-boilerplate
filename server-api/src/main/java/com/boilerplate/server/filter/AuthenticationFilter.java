@@ -7,7 +7,6 @@ import javax.servlet.ServletResponse;
 
 /**
  * 权限过滤，替换shiro默认的权限过滤，返回json
- * Created by sulin on 16/6/8.
  */
 public class AuthenticationFilter extends FormAuthenticationFilter {
 

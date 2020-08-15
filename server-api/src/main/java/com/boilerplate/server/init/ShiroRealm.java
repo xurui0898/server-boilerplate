@@ -10,7 +10,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 /**
  * 权限认证具体实现
- * Created by sulin on 16/6/6.
  */
 public class ShiroRealm extends AuthorizingRealm {
 
