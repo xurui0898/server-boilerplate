@@ -5,11 +5,14 @@ import com.boilerplate.server.dao.TestMapper;
 import com.boilerplate.server.entity.UserInfo;
 import com.boilerplate.server.model.AccountExample;
 import com.boilerplate.server.model.TestExample;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 测试一下
@@ -34,8 +37,12 @@ public class IndexController {
     public Object account(UserInfo userInfo) {
         log.info(String.valueOf(userInfo.getUserId()));
         log.info(userInfo.getUserName());
+        //工具类测试
+        List<Long> idList = Lists.newArrayList(1L, 3L, 8L, 9L, 10L, 11L);
 
         AccountExample accountExample = new AccountExample();
+        AccountExample.Criteria criteria = accountExample.createCriteria();
+        criteria.andIdIn(idList);
         return accountMapper.selectByExample(accountExample);
     }
 
