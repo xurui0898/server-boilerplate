@@ -4,7 +4,7 @@ package com.boilerplate.server.thread;
  * 测试多线程-实现Runnable接口方式
  */
 public class TestThread implements Runnable {
-    private int ticket = 100;
+    private int ticket = 50;
 
     @Override
     public void run() {
@@ -17,7 +17,7 @@ public class TestThread implements Runnable {
                     ticket--;
 
                     try {
-                        Thread.sleep(30);
+                        Thread.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
