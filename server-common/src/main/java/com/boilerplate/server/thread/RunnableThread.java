@@ -1,9 +1,9 @@
 package com.boilerplate.server.thread;
 
 /**
- * 测试多线程-实现Runnable接口方式
+ * 无返回值多线程-实现Runnable接口方式
  */
-public class TestThread implements Runnable {
+public class RunnableThread implements Runnable {
     private int ticket = 50;
 
     @Override
@@ -12,7 +12,7 @@ public class TestThread implements Runnable {
         for (int i = 0; i < total; i++) {
             synchronized (this){
                 if (ticket>0) {
-                    String logText = String.format("线程[%s]运行，ticket=%s", Thread.currentThread().getName(), ticket);
+                    String logText = String.format("RunnableThread 线程[%s]运行，ticket=%s", Thread.currentThread().getName(), ticket);
                     System.out.println(logText);
                     ticket--;
 

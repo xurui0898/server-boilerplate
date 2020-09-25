@@ -51,7 +51,8 @@ public class IndexController {
     @RequestMapping("test")
     public Object test() {
         System.out.println("多线程任务开始...");
-        threadService.taskNum();
+        threadService.runnableThread();
+        threadService.callableThread();
         System.out.println("多线程任务结束...");
 
         UserInfo userInfo = new UserInfo();
