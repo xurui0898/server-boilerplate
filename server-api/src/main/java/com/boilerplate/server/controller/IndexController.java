@@ -50,10 +50,11 @@ public class IndexController {
 
     @RequestMapping("test")
     public Object test() {
-        System.out.println("多线程任务开始...");
+        log.info("多线程任务开始...");
         threadService.runnableThread();
-        threadService.callableThread();
-        System.out.println("多线程任务结束...");
+        List<Integer> callableData = threadService.callableThread();
+        log.info("多线程任务结束...");
+        System.out.println("所有返回值="+callableData);
 
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(1008611L);

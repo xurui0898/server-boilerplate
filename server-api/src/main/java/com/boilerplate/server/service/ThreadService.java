@@ -3,6 +3,7 @@ package com.boilerplate.server.service;
 import com.boilerplate.server.thread.CallableThread;
 import com.boilerplate.server.thread.RunnableThread;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.concurrent.*;
  * 多线程测试
  */
 @Service
+@Slf4j
 public class ThreadService {
     /**
      * 无返回值的多线程测试
@@ -41,15 +43,16 @@ public class ThreadService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("任务总耗时：" + (System.currentTimeMillis() - currentTimeMillis));
+            log.info("任务总耗时：{}", System.currentTimeMillis() - currentTimeMillis);
         }
     }
 
     /**
      * 有返回值的多线程测试
      */
-    public void callableThread() {
+    public List<Integer> callableThread() {
         long currentTimeMillis = System.currentTimeMillis();
+        List<Integer> data = new ArrayList<>();
 
         //构建一个线程池
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(
@@ -72,7 +75,10 @@ public class ThreadService {
             while (!threadPool.awaitTermination(2, TimeUnit.SECONDS));
             for (Future<List<Integer>> task : tasks) {
                 try {
-                    System.out.println("返回值="+new Gson().toJson(task.get()));
+                    log.info("返回值={}", task.get());
+                    if (task.get() != null && !task.get().isEmpty()) {
+                        data.addAll(task.get());
+                    }
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
@@ -80,7 +86,9 @@ public class ThreadService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("任务总耗时：" + (System.currentTimeMillis() - currentTimeMillis));
+            log.info("任务总耗时：{}", System.currentTimeMillis() - currentTimeMillis);
         }
+
+        return data;
     }
 }

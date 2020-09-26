@@ -1,8 +1,11 @@
 package com.boilerplate.server.thread;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 无返回值多线程-实现Runnable接口方式
  */
+@Slf4j
 public class RunnableThread implements Runnable {
     private int ticket = 50;
 
@@ -12,15 +15,8 @@ public class RunnableThread implements Runnable {
         for (int i = 0; i < total; i++) {
             synchronized (this){
                 if (ticket>0) {
-                    String logText = String.format("RunnableThread 线程[%s]运行，ticket=%s", Thread.currentThread().getName(), ticket);
-                    System.out.println(logText);
+                    log.info("RunnableThread 线程[{}]运行，num={}",Thread.currentThread().getName(),ticket);
                     ticket--;
-
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }
