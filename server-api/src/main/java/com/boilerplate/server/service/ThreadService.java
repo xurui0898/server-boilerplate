@@ -2,7 +2,6 @@ package com.boilerplate.server.service;
 
 import com.boilerplate.server.thread.CallableThread;
 import com.boilerplate.server.thread.RunnableThread;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

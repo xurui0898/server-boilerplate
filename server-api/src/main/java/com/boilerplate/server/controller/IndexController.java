@@ -35,7 +35,7 @@ public class IndexController {
         return testMapper.selectByExample(testExample);
     }
 
-    @RequestMapping("account")
+    @RequestMapping("/account")
     public Object account(UserInfo userInfo) {
         log.info(String.valueOf(userInfo.getUserId()));
         log.info(userInfo.getUserName());
@@ -48,13 +48,15 @@ public class IndexController {
         return accountMapper.selectByExample(accountExample);
     }
 
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public Object test() {
         log.info("多线程任务开始...");
+        //无返回值多线程
         threadService.runnableThread();
+        //有返回值多线程
         List<Integer> callableData = threadService.callableThread();
-        log.info("多线程任务结束...");
         System.out.println("所有返回值="+callableData);
+        log.info("多线程任务结束...");
 
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(1008611L);
