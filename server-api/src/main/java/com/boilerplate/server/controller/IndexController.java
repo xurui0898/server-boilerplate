@@ -58,12 +58,7 @@ public class IndexController {
         System.out.println("所有返回值="+callableData);
         log.info("多线程任务结束...");
 
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(1008611L);
-        userInfo.setUserName("眺望流浪的时光");
-        userInfo.setAddress("北京市海淀区");
-        userInfo.setFeature("yep!");
-        return userInfo;
+        return callableData;
     }
 
 }

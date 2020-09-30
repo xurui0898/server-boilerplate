@@ -11,25 +11,22 @@ import java.util.concurrent.Callable;
  */
 @Slf4j
 public class CallableThread implements Callable<List<Integer>> {
-    private int num = 50;
+    private final List<Integer> goodsIdList;
+
+    public CallableThread(List<Integer> goodsIdList) {
+        this.goodsIdList = goodsIdList;
+    }
 
     @Override
     public List<Integer>  call() throws Exception {
         List<Integer> data = new ArrayList<>();
-        int total = num;
-        for (int i = 0; i < total; i++) {
-            synchronized (this){
-                if (num >0) {
-                    log.info("CallableThread 线程[{}]运行，num={}",Thread.currentThread().getName(),num);
-                    //模拟返回错误数据
-                    if (num == 6 || num == 25 || num == 48 || num == 50) {
-                        data.add(num);
-                    }
-                    num--;
-                }
-            }
-        }
+        for (Integer goodsId : goodsIdList) {
+            //业务处理 单个模拟耗时
+            Thread.sleep(200);
 
+            data.add(goodsId);
+            log.info("处理完成，goodsId={}",goodsId);
+        }
         return data;
     }
 }
