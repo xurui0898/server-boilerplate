@@ -1,14 +1,17 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.service.ThreadService;
+import com.boilerplate.server.Util.Utils;
 import com.boilerplate.server.dao.AccountMapper;
 import com.boilerplate.server.dao.TestMapper;
 import com.boilerplate.server.entity.UserInfo;
 import com.boilerplate.server.model.AccountExample;
 import com.boilerplate.server.model.TestExample;
+import com.boilerplate.server.service.ThreadService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -82,6 +85,17 @@ public class IndexController {
         String formatDate = dateFormat.format(new Date(currentTime));
         log.info("原时间戳={}，转换后日期时间={}",currentTime,formatDate);
         return true;
+    }
+
+    @RequestMapping("/post")
+    public Object post() {
+        String url = "http://api.map.baidu.com/geocoding/v3/?address=1&output=json&ak=1&callback=showLocation";
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("source", "10086");
+        params.add("value", "1");
+        String response = Utils.sendPostRequest(url,params);
+        log.info("response={}",response);
+        return response;
     }
 
 }
