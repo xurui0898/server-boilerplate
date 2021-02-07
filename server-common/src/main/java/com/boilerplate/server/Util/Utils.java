@@ -30,4 +30,21 @@ public class Utils {
 
         return restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class).getBody();
     }
+
+    /**
+     * 向URL发送GET请求
+     * @param url
+     * @return
+     */
+    public static String sendGetRequest(String url){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        //将请求头部和参数合成一个请求
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(headers);
+        //设置中文编码
+        restTemplate.getMessageConverters().add(1,new StringHttpMessageConverter(StandardCharsets.UTF_8));
+
+        return restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class).getBody();
+    }
 }
