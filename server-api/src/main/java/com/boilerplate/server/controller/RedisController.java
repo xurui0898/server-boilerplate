@@ -1,10 +1,16 @@
 package com.boilerplate.server.controller;
 
+import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.entity.ResponseResult;
 import com.boilerplate.server.redis.RedisUtils;
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Redis测试专用
@@ -16,14 +22,18 @@ public class RedisController {
     private RedisUtils redisUtils;
 
     @RequestMapping("redis/test")
-    public String test() {
+    public ResponseResult<List<String>> test() {
         int teamId = 43;
         String teamNumKey = String.format("race_team_help_count_%s", teamId);
         String teamNumField = "help_count";
         int num = Integer.parseInt(redisUtils.hget(teamNumKey, teamNumField).toString());
-
         String logText = String.format("redis data,team_id=%s team_help_num=%s", teamId,num);
-        log.info(logText);
-        return logText;
+
+        //test返回结果集封装
+        List<String> logList = Lists.newArrayList(logText);
+        ResponseResult<List<String>> responseResult = Response.makeOKRsp(logList);
+
+        log.info(new Gson().toJson(responseResult));
+        return responseResult;
     }
 }
