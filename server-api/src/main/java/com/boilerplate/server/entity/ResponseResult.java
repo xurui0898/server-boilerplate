@@ -3,7 +3,7 @@ package com.boilerplate.server.entity;
 import com.boilerplate.server.enums.ResultCode;
 
 /**
- * 返回结果集
+ * API返回结果格式
  */
 public class ResponseResult<T> {
     public Integer code;//返回状态码200成功
@@ -14,8 +14,9 @@ public class ResponseResult<T> {
         return code;
     }
 
-    public ResponseResult<T> setCode(ResultCode retCode) {
-        this.code = retCode.code;
+    public ResponseResult<T> setCode(ResultCode resultCode) {
+        this.code = resultCode.getCode();
+        this.msg = resultCode.getMsg();
         return this;
     }
 
