@@ -1,7 +1,7 @@
 package com.boilerplate.server.controller;
 
 import com.boilerplate.server.entity.Response;
-import com.boilerplate.server.entity.ResponseResult;
+import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.redis.RedisUtils;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
@@ -22,7 +22,7 @@ public class RedisController {
     private RedisUtils redisUtils;
 
     @RequestMapping("redis/test")
-    public ResponseResult<List<String>> test() {
+    public ApiResult<List<String>> test() {
         int teamId = 43;
         String teamNumKey = String.format("race_team_help_count_%s", teamId);
         String teamNumField = "help_count";
@@ -31,9 +31,9 @@ public class RedisController {
 
         //test返回结果集封装
         List<String> logList = Lists.newArrayList(logText);
-        ResponseResult<List<String>> responseResult = Response.makeOKRsp(logList);
+        ApiResult<List<String>> apiResult = Response.makeOKRsp(logList);
 
-        log.info(new Gson().toJson(responseResult));
-        return responseResult;
+        log.info(new Gson().toJson(apiResult));
+        return apiResult;
     }
 }

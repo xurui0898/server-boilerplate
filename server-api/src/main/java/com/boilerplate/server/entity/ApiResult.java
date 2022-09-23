@@ -5,22 +5,22 @@ import com.boilerplate.server.enums.ResultCode;
 /**
  * API返回结果格式
  */
-public class ResponseResult<T> {
-    public Integer code;//返回状态码200成功
-    private String msg; //返回描述信息
-    private T data; //返回内容体
+public class ApiResult<T> {
+    private Integer code;//返回状态码
+    private String msg;  //返回描述信息
+    private T data;      //返回数据
 
     public int getCode() {
         return code;
     }
 
-    public ResponseResult<T> setCode(ResultCode resultCode) {
+    public ApiResult<T> setCode(ResultCode resultCode) {
         this.code = resultCode.getCode();
         this.msg = resultCode.getMsg();
         return this;
     }
 
-    public ResponseResult<T> setCode(int code) {
+    public ApiResult<T> setCode(int code) {
         this.code = code;
         return this;
     }
@@ -29,7 +29,7 @@ public class ResponseResult<T> {
         return msg;
     }
 
-    public ResponseResult<T> setMsg(String msg) {
+    public ApiResult<T> setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -38,7 +38,7 @@ public class ResponseResult<T> {
         return data;
     }
 
-    public ResponseResult<T> setData(T data) {
+    public ApiResult<T> setData(T data) {
         this.data = data;
         return this;
     }

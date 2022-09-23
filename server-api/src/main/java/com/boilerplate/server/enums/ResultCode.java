@@ -16,7 +16,7 @@ public enum ResultCode {
     @Getter
     private final int code;
     @Getter
-    public final String msg;
+    private final String msg;
 
     ResultCode(Integer code, String msg) {
         this.code = code;
