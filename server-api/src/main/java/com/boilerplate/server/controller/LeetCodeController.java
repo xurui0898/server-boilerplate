@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * 力扣测试controller
+ */
 @RestController
 @Slf4j
 public class LeetCodeController {

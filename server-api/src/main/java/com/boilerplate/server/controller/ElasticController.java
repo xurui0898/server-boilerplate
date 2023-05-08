@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * es测试controller
+ */
 @RestController
 @Slf4j
 @RequestMapping("elasticsearch")

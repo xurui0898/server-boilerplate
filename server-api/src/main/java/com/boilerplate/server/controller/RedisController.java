@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Redis测试专用
+ * Redis测试controller
  */
 @RestController
 @Slf4j

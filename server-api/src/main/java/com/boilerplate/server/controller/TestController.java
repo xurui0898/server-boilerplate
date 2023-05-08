@@ -16,29 +16,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 测试controller
+ * 通用测试controller
  */
 @RestController
 @Slf4j
 public class TestController {
-    @Autowired
-    private ThreadService threadService;
-
-    /**
-     * 多线程任务
-     * @return
-     */
-    @RequestMapping("/test/thread")
-    public Object thread() {
-        log.info("多线程任务开始...");
-        //无返回值多线程
-        threadService.runnableThread();
-        //有返回值多线程
-        List<Integer> callableData = threadService.callableThread();
-        System.out.println("所有返回值="+callableData);
-        log.info("多线程任务结束...");
-
-        return callableData;
+    public static void main(String[] args) {
+        System.out.println("Test 测试");
     }
 
     /**
