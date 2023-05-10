@@ -1,6 +1,7 @@
 package com.boilerplate.server.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
@@ -14,8 +15,12 @@ import java.util.Date;
 @Slf4j
 public class IndexController {
     public static void main(String[] args) {
-        System.out.println("start 默认测试!");
+        //时间日期
         timeHandle();
+        //使用工具类进行字符串拼接
+        String s1 = null;
+        String s2 = "1678";
+        System.out.println(StringUtils.join(s1,s2));
     }
 
     /**
