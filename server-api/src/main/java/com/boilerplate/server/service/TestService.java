@@ -7,6 +7,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -43,12 +44,21 @@ public class TestService {
 
     /**
      * 字符串处理
+     * 使用StringUtils工具类
      */
     public static void stringHandle() {
-        //StringUtils工具类 进行字符串拼接
+        //多个字符串拼接
         String s1 = null;
-        String s2 = "椰树椰汁·坚持在海南岛用新鲜椰肉鲜榨";
+        String s2 = "拼接字符串abc";
         System.out.println(StringUtils.join(s1,s2));
+        //字符串分割为数组
+        String s3 = "椰树椰汁,坚持在海南岛,用新鲜椰肉,鲜榨";
+        String[] sList = StringUtils.split(s3, ",");
+        System.out.println(Arrays.toString(sList));
+        //list拆分拼接为字符串
+        List<String> list = Lists.newArrayList("椰树椰汁","坚持在海南岛","用新鲜椰肉鲜榨");
+        String strJoin = StringUtils.join(list, "");
+        System.out.println(strJoin);
     }
 
     /**
