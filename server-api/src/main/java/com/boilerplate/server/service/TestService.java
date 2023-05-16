@@ -1,5 +1,7 @@
 package com.boilerplate.server.service;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,7 @@ public class TestService {
      * 日期时间格式化与时间戳转换，不能使用SimpleDateFormat有大坑
      */
     public static void datetimeHandle() {
+        System.out.println("===========时间日期转换==============");
         //common-lang3工具类实现
         String format = "yyyy-MM-dd HH:mm:ss";
         long currentTime = System.currentTimeMillis();
@@ -37,10 +40,16 @@ public class TestService {
         try {
             Date parseDate = DateUtils.parseDateStrictly(strDate, format);
             long unixTimestamp = parseDate.getTime()/1000;
-            System.out.println(String.format("时间字符串=%s，转换时间戳=%s",strDate,unixTimestamp));
+            System.out.println(String.format("[1]时间字符串=%s，转换时间戳=%s",strDate,unixTimestamp));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        //hutool日期工具类转换
+        String strDate2 = "2022/12/1 19:23:44";
+        Date date2 = DateUtil.parse(strDate2);
+        long unixTimestamp2 = date2.getTime()/1000;
+        System.out.println(String.format("[2]时间字符串=%s，转换时间戳=%s",strDate2,unixTimestamp2));
     }
 
     /**
@@ -48,6 +57,7 @@ public class TestService {
      * 使用StringUtils工具类
      */
     public static void stringHandle() {
+        System.out.println("===========字符串处理==============");
         //多个字符串拼接
         String s1 = null;
         String s2 = "拼接字符串abc";
@@ -67,6 +77,7 @@ public class TestService {
      * 禁止在foreach时删除元素，会报错
      */
     public static void removeList() {
+        System.out.println("===========list处理==============");
         List<String> list = Lists.newArrayList("北京市","海淀区","上地","清河","西二旗","上地","西三旗","西北旺");
         String delStr = "海淀区";
         System.out.println("list删除前："+list);
@@ -98,16 +109,20 @@ public class TestService {
      * 如何正确进行加减乘除数学运算
      */
     public static void mathCalculate() {
+        System.out.println("===========数学运算==============");
         double a = 0.06;
         double b = 0.01;
         System.out.println("加法结果："+ArithService.add(a,b));
         System.out.println("减法结果："+ArithService.sub(a,b));
         System.out.println("乘法结果："+ArithService.mul(a,b));
         System.out.println("除法结果："+ArithService.div(a,b,2));
+        //hutool工具类做数学运算-推荐
+        double sub = NumberUtil.sub(a, b);
+        System.out.println("hutool工具减法结果："+sub);
         //科学计数法显示处理
         double r = ArithService.mul(a,b);
         String str = new BigDecimal(String.valueOf(r)).toString();
-        System.out.println(str);
+        System.out.println("科学计数法显示结果："+str);
     }
     
 }
