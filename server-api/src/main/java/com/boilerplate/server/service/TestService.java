@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -91,6 +92,22 @@ public class TestService {
         //list去重
         list = list.stream().distinct().collect(Collectors.toList());
         System.out.println("list删除后："+list);
+    }
+
+    /**
+     * 如何正确进行加减乘除数学运算
+     */
+    public static void mathCalculate() {
+        double a = 0.06;
+        double b = 0.01;
+        System.out.println("加法结果："+ArithService.add(a,b));
+        System.out.println("减法结果："+ArithService.sub(a,b));
+        System.out.println("乘法结果："+ArithService.mul(a,b));
+        System.out.println("除法结果："+ArithService.div(a,b,2));
+        //科学计数法显示处理
+        double r = ArithService.mul(a,b);
+        String str = new BigDecimal(String.valueOf(r)).toString();
+        System.out.println(str);
     }
     
 }

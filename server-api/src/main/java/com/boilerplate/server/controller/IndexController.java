@@ -18,5 +18,7 @@ public class IndexController {
         TestService.stringHandle();
         //正确删除list中的元素
         TestService.removeList();
+        //正确进行加减乘除数学运算
+        TestService.mathCalculate();
     }
 }
