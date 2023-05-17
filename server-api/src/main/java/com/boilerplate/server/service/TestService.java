@@ -119,6 +119,9 @@ public class TestService {
         //hutool工具类做数学运算-推荐
         double sub = NumberUtil.sub(a, b);
         System.out.println("hutool工具减法结果："+sub);
+        //比较数值大小，返回值：1大于 0等于 -1小于
+        int compare = NumberUtil.compare(0.2, 0.1);
+        System.out.println("hutool工具比较结果："+compare);
         //科学计数法显示处理
         double r = ArithService.mul(a,b);
         String str = new BigDecimal(String.valueOf(r)).toString();
