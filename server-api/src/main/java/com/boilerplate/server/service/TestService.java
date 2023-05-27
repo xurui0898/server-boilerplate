@@ -2,6 +2,7 @@ package com.boilerplate.server.service;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.http.HttpUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -10,10 +11,7 @@ import org.apache.commons.lang3.time.DateUtils;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -126,6 +124,31 @@ public class TestService {
         double r = ArithService.mul(a,b);
         String str = new BigDecimal(String.valueOf(r)).toString();
         System.out.println("科学计数法显示结果："+str);
+    }
+
+    /**
+     * http请求
+     */
+    public static void httpRequest() {
+        //Get请求：可以传入参数会自动做URL编码，拼接在URL中
+        String url = "https://app.ingame.qq.com/gingame/content/content_list_by_channel";
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("game", "esports");
+        paramMap.put("order", "1");
+        paramMap.put("ingame_channel_id", "3333");
+        paramMap.put("start", "0");
+        paramMap.put("num", "1");
+
+        String getResult = HttpUtil.get(url, paramMap);
+        System.out.println("get请求结果：" + getResult);
+        //Post请求
+        String postUrl = "https://vegame.qq.com/vesports-api/v1/minigo/query_all_official_matchs";
+        HashMap<String, Object> postParamMap = new HashMap<>();
+        postParamMap.put("page_size", "10");
+        postParamMap.put("page_token", "");
+
+        String postResult = HttpUtil.post(postUrl, postParamMap);
+        System.out.println("post请求结果：" + postResult);
     }
     
 }

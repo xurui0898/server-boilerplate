@@ -20,5 +20,7 @@ public class IndexController {
         TestService.removeList();
         //正确进行加减乘除数学运算
         TestService.mathCalculate();
+        //http请求
+        TestService.httpRequest();
     }
 }
