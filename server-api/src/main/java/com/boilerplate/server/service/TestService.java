@@ -156,17 +156,29 @@ public class TestService {
      * 先进后出，可用于逆序链表计算
      */
     public static void stackHandle(){
+        //Java栈
         ArrayDeque<Integer> stack = new ArrayDeque<>();
         stack.push(4);
         stack.push(8);
         stack.push(5);
         stack.push(9);
-
         while (!stack.isEmpty()) {
             Integer num = stack.pop();
             System.out.println("num=" + num);
         }
         System.out.println("stack遍历完成");
+
+        //用linkedList实现栈功能，后进先出
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.addFirst(4);
+        linkedList.addFirst(8);
+        linkedList.addFirst(5);
+        linkedList.addFirst(9);
+        while (!linkedList.isEmpty()) {
+            Integer num = linkedList.removeFirst();
+            System.out.println("num=" + num);
+        }
+        System.out.println("LinkedList实现stack 遍历完成");
     }
     
 }

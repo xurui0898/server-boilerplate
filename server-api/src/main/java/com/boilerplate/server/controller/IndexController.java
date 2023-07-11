@@ -21,7 +21,7 @@ public class IndexController {
         //正确进行加减乘除数学运算
         TestService.mathCalculate();
         //http请求
-        TestService.httpRequest();
+        //TestService.httpRequest();
         //堆栈测试-先进后出，可用于逆序链表
         TestService.stackHandle();
     }
