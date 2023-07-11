@@ -150,5 +150,23 @@ public class TestService {
         String postResult = HttpUtil.post(postUrl, postParamMap);
         System.out.println("post请求结果：" + postResult);
     }
+
+    /**
+     * 堆栈测试
+     * 先进后出，可用于逆序链表计算
+     */
+    public static void stackHandle(){
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        stack.push(4);
+        stack.push(8);
+        stack.push(5);
+        stack.push(9);
+
+        while (!stack.isEmpty()) {
+            Integer num = stack.pop();
+            System.out.println("num=" + num);
+        }
+        System.out.println("stack遍历完成");
+    }
     
 }
