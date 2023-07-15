@@ -24,5 +24,7 @@ public class IndexController {
         //TestService.httpRequest();
         //堆栈测试-先进后出，可用于逆序链表
         TestService.stackHandle();
+        //数组测试
+        TestService.arrayHandel();
     }
 }

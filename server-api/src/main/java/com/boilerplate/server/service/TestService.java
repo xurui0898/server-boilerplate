@@ -180,5 +180,17 @@ public class TestService {
         }
         System.out.println("LinkedList实现stack 遍历完成");
     }
+
+    /**
+     * 数组测试
+     */
+    public static void arrayHandel() {
+        int[] ints = new int[2];
+        int[] intArray = {100,188,199,288,688};
+        //数组扩容
+        intArray = Arrays.copyOf(intArray, 10);
+        intArray[5] = 888;
+        System.out.println(Arrays.toString(intArray));
+    }
     
 }
