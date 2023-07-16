@@ -24,6 +24,27 @@ public class LeetCodeController {
         String revStr = "a good   example";
         String revRet = reverseWords(revStr);
         System.out.println("字符串翻转单词= " + revRet);
+        //字符串翻转
+        String revStr2 = "Hello xu rui";
+        String revRet2 = reverseString(revStr2);
+        System.out.println("字符串翻转= " + revRet2);
+    }
+
+    /**
+     * 字符串翻转
+     * @param s
+     * @return
+     */
+    public static String reverseString(String s) {
+        char[] charArray = s.toCharArray();
+        int length = charArray.length;
+        int times = length / 2;
+        for (int i = 0; i < times; i++) {
+            char temp = charArray[i];
+            charArray[i] = charArray[length - 1 - i];
+            charArray[length-1-i] = temp;
+        }
+        return new String(charArray);
     }
 
     /**
