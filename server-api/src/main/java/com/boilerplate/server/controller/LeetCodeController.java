@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 力扣测试controller
@@ -13,26 +16,36 @@ import java.util.HashMap;
 @Slf4j
 public class LeetCodeController {
     public static void main(String[] args) {
-        log.info("code test");
-        String s = "abcabeddcbb";
-        int num = lengthOfLongestSubstring(s);
-        System.out.println("num = " + num);
+        //无重复字符的最长子串 长度
+        String str = "abcabeddcbb";
+        int num = lengthOfLongestSubstring(str);
+        System.out.println("无重复字符的最长子串 长度 = " + num);
+        //字符串翻转单词
+        String revStr = "a good   example";
+        String revRet = reverseWords(revStr);
+        System.out.println("字符串翻转单词= " + revRet);
     }
 
-    public static int[] twoSum(int[] nums, int target) {
-        int[] indexData = new int[2];
-        HashMap<Integer, Integer> hashMap = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (hashMap.containsKey(nums[i])) {
-                indexData[0] = i;
-                indexData[1] = hashMap.get(nums[i]);
-                return indexData;
-            }
-            hashMap.put(target - nums[i], i);
-        }
-        return indexData;
+    /**
+     * 字符串翻转单词
+     * String revStr = "the sky is blue";
+     * @param s
+     * @return
+     */
+    public static String reverseWords(String s) {
+        String[] sArr = s.trim().split(" ");//拆分为单词数组
+        List<String> sList = Arrays.asList(sArr);//数组转list 这样转的list是不可变的，不能新增
+        Collections.reverse(sList);//翻转list元素，每个元素里面还需要再去除头尾空格
+        sList = sList.stream().filter(item-> !item.isEmpty()).collect(Collectors.toList());//去除空格元素 很重要
+        return String.join(" ",sList);//使用空格拼接list为新的字符串
     }
 
+    /**
+     * #3 无重复字符的最长子串
+     * 给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
+     * @param s
+     * @return
+     */
     public static int lengthOfLongestSubstring(String s) {
         if (s.length() == 0) {
             return 0;
