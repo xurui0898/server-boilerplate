@@ -20,14 +20,19 @@ public class LeetCodeController {
         String str = "abcabeddcbb";
         int num = lengthOfLongestSubstring(str);
         System.out.println("无重复字符的最长子串 长度 = " + num);
-        //字符串翻转单词
-        String revStr = "a good   example";
-        String revRet = reverseWords(revStr);
-        System.out.println("字符串翻转单词= " + revRet);
+
         //字符串翻转
-        String revStr2 = "Hello xu rui";
-        String revRet2 = reverseString(revStr2);
-        System.out.println("字符串翻转= " + revRet2);
+        String revStr = "Hello xu rui";
+        String revStrData = reverseString(revStr);
+        System.out.println("字符串翻转 = " + revStrData);
+        //字符串翻转单词
+        String revWords = "a good   example";
+        String revWordsData = reverseWords(revWords);
+        System.out.println("字符串翻转单词 = " + revWordsData);
+        //字符串翻转单词3
+        String revWords3 = "God Ding";
+        String revWords3Data = reverseWords3(revWords3);
+        System.out.println("字符串翻转单词3 = " + revWords3Data);
     }
 
     /**
@@ -49,7 +54,8 @@ public class LeetCodeController {
 
     /**
      * 字符串翻转单词
-     * String revStr = "the sky is blue";
+     * 输入：s = "the sky is blue"
+     * 输出："blue is sky the"
      * @param s
      * @return
      */
@@ -59,6 +65,19 @@ public class LeetCodeController {
         Collections.reverse(sList);//翻转list元素，每个元素里面还需要再去除头尾空格
         sList = sList.stream().filter(item-> !item.isEmpty()).collect(Collectors.toList());//去除空格元素 很重要
         return String.join(" ",sList);//使用空格拼接list为新的字符串
+    }
+
+    /**
+     * 字符串翻转单词3
+     * 输入： s = "God Ding"
+     * 输出："doG gniD"
+     * @param s
+     * @return
+     */
+    public static String reverseWords3(String s) {
+        String revStr = reverseString(s);
+        revStr = reverseWords(revStr);
+        return revStr;
     }
 
     /**
