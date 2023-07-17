@@ -33,6 +33,10 @@ public class LeetCodeController {
         String revWords3 = "God Ding";
         String revWords3Data = reverseWords3(revWords3);
         System.out.println("字符串翻转单词3 = " + revWords3Data);
+        //最长回文子串
+        String longStr = "abbaabbw";
+        String longStrData = longestPalindrome(longStr);
+        System.out.println("最长回文子串 = " + longStrData);
     }
 
     /**
@@ -100,5 +104,37 @@ public class LeetCodeController {
             max = Math.max(max, i - left + 1);
         }
         return max;
+    }
+
+    /**
+     * 最长回文子串-中心扩散优化版
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome(String s) {
+        int start = 0, end = 0, strLen = s.length();
+        int i = 0;
+        while (i < strLen) {
+            int left = i, right = i;
+            //如果后面有连续相同字符，把right向右扩展到最后一个相同字符的位置，
+            //并把i设置到该位置的下一个位置。
+            //因为每次循环i左边的字符一定和i不相同，所以不需要将left向左扩展
+            while (right < strLen - 1 && s.charAt(right + 1) == s.charAt(left)) {
+                right++;
+            }
+            i = right + 1;
+
+            while (left >= 0 && right < strLen && s.charAt(left) == s.charAt(right)) {
+                left--;
+                right++;
+            }
+            if (right - left> end - start) {
+                end = right;
+                start = left;
+            }
+        }
+        //这里start+1是因为：双边扩散时为了判断更左字符-1了，实际开始位置是+1。
+        //end不处理是因为substring不包含该元素，是结束元素
+        return s.substring(start+1, end);
     }
 }
