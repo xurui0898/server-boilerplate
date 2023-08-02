@@ -82,6 +82,7 @@
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>${mybatis.generator.version}</version>
             </dependency>
+            <!--druid 数据库连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
