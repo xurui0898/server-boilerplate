@@ -88,7 +88,9 @@
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
-            <!--shiro-->
+            <!--安全管理权限验证框架 shiro-->
+            <!--同类型有Spring Security，针对微服务Spring官方推出了Spring Cloud Security 和 Spring Cloud OAuth2 -->
+            <!--同类型还有轻量级Java权限认证框架 Sa-Token-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
@@ -158,7 +160,7 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!--redis 依赖-->
+            <!--redis-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
