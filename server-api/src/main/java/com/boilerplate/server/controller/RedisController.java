@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Redis测试controller
@@ -26,7 +27,7 @@ public class RedisController {
         int teamId = 43;
         String teamNumKey = String.format("race_team_help_count_%s", teamId);
         String teamNumField = "help_count";
-        int num = Integer.parseInt(redisUtils.hget(teamNumKey, teamNumField).toString());
+        String num = Objects.toString(redisUtils.hget(teamNumKey, teamNumField), "");
         String logText = String.format("redis data,team_id=%s team_help_num=%s", teamId,num);
 
         //test返回结果集封装
