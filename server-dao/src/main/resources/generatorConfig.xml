@@ -27,10 +27,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="test" domainObjectName="Test">
+        <table schema="" tableName="area" domainObjectName="Area">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-        <table schema="" tableName="account" domainObjectName="Account">
+        <table schema="" tableName="area_street" domainObjectName="AreaStreet">
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
 
