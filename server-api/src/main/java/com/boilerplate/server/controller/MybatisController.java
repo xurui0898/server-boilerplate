@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,9 +23,10 @@ public class MybatisController {
 
     @RequestMapping("arealist")
     public ApiResult<List<Area>> areaList() {
-        List<Area> list = areaService.selectByExample(null);
-        ApiResult<List<Area>> apiResult = Response.makeOKRsp(list);
+        //根据父ID获取区域列表
+        List<Area> list = areaService.getList(2);
 
+        ApiResult<List<Area>> apiResult = Response.makeOKRsp(list);
         return apiResult;
     }
 }
