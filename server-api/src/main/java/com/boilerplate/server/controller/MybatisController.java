@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * mybatis测试
@@ -24,9 +25,13 @@ public class MybatisController {
     private AreaService areaService;
 
     @RequestMapping("arealist")
-    public ApiResult<List<AreaVO>> areaList() {
+    public ApiResult<List<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
+        parentId = Optional.ofNullable(parentId).orElse(0);
+        page     = Optional.ofNullable(page).orElse(1);
+        pageSize = Optional.ofNullable(pageSize).orElse(10);
+
         //根据父ID获取区域列表
-        List<Area> listData = areaService.getList(2);
+        List<Area> listData = areaService.getList(parentId,page,pageSize);
         //处理展示实体字段，还可用Orika进行深拷贝
         List<AreaVO> listView = BeanUtil.copyToList(listData, AreaVO.class);
 
