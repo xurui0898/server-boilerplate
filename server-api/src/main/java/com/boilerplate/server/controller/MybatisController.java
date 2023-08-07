@@ -35,12 +35,12 @@ public class MybatisController {
         }
 
         //根据父ID获取区域列表
-        List<Area> listData = areaService.getList(parentId,page,pageSize);
-        //拷贝list只返回部分字段，还可用Orika进行深拷贝
-        List<AreaVO> listView = BeanUtil.copyToList(listData, AreaVO.class);
+        AreaList<Area> areaData = areaService.getList(parentId,page,pageSize);
+        //拷贝list，只返回AreaVO实体字段用于展示，还可用Orika进行深拷贝
+        List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
 
         //组装返回结构
-        AreaList<AreaVO> areaList = new AreaList<>(false, listView);
+        AreaList<AreaVO> areaList = new AreaList<>(areaData.getHasNext(), listView);
 
         return Response.makeOKRsp(areaList);
     }
