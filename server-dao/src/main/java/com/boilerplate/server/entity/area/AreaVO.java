@@ -1,4 +1,4 @@
-package com.boilerplate.server.entity;
+package com.boilerplate.server.entity.area;
 
 import lombok.Data;
 import org.apache.commons.lang3.time.DateFormatUtils;

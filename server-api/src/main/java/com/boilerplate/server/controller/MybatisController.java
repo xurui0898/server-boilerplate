@@ -3,8 +3,9 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.Service.AreaService;
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.AreaVO;
 import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.entity.area.AreaList;
+import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,22 @@ public class MybatisController {
     private AreaService areaService;
 
     @RequestMapping("arealist")
-    public ApiResult<List<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
+    public ApiResult<AreaList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
         parentId = Optional.ofNullable(parentId).orElse(0);
         page     = Optional.ofNullable(page).orElse(1);
         pageSize = Optional.ofNullable(pageSize).orElse(10);
+        if (page < 1) {
+            page = 1;
+        }
 
         //根据父ID获取区域列表
         List<Area> listData = areaService.getList(parentId,page,pageSize);
-        //处理展示实体字段，还可用Orika进行深拷贝
+        //拷贝list只返回部分字段，还可用Orika进行深拷贝
         List<AreaVO> listView = BeanUtil.copyToList(listData, AreaVO.class);
 
-        ApiResult<List<AreaVO>> apiResult = Response.makeOKRsp(listView);
-        return apiResult;
+        //组装返回结构
+        AreaList<AreaVO> areaList = new AreaList<>(false, listView);
+
+        return Response.makeOKRsp(areaList);
     }
 }
