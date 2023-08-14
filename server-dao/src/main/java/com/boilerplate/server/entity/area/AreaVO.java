@@ -46,11 +46,7 @@ public class AreaVO {
      * @mbggenerated
      */
     private Integer createdAt;
-
-    /**
-     * 转换时间戳为日期时间
-     * @return
-     */
+    //返回格式化日期时间
     public String getCreatedAt() {
         String format = "yyyy-MM-dd HH:mm:ss";
         return DateFormatUtils.format(createdAt * 1000L, format);

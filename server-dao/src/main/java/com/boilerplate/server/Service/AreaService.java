@@ -1,7 +1,7 @@
 package com.boilerplate.server.Service;
 
 import com.boilerplate.server.dao.AreaMapper;
-import com.boilerplate.server.entity.area.AreaList;
+import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class AreaService {
      * @param parentId
      * @return
      */
-    public AreaList<Area> getList(Integer parentId, Integer page, Integer pageSize){
+    public ApiList<Area> getList(Integer parentId, Integer page, Integer pageSize){
         AreaExample areaExample = new AreaExample();
         AreaExample.Criteria criteria = areaExample.createCriteria();
         criteria.andParentIdEqualTo(parentId);
@@ -53,6 +53,6 @@ public class AreaService {
             list = list.subList(0, pageSize);
         }
 
-        return new AreaList<>(hasNext, list);
+        return new ApiList<>(hasNext, list);
     }
 }

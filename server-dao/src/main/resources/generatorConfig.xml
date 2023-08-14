@@ -27,11 +27,13 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="area" domainObjectName="Area">
+        <!--自动生成表配置-->
+        <table schema="" tableName="test_user" domainObjectName="TestUser">
             <generatedKey column="id" sqlStatement="JDBC"/>
-        </table>
-        <table schema="" tableName="area_street" domainObjectName="AreaStreet">
-            <generatedKey column="id" sqlStatement="JDBC"/>
+            <columnOverride column="sex" jdbcType="SMALLINT" javaType="java.lang.Short">
+            </columnOverride>
+            <columnOverride column="create_time" javaType="java.sql.Timestamp">
+            </columnOverride>
         </table>
 
     </context>
