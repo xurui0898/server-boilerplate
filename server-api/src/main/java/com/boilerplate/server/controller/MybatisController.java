@@ -12,9 +12,11 @@ import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.TestUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +53,7 @@ public class MybatisController {
     }
 
     @RequestMapping("userlist")
-    public ApiResult<ApiList<TestUserVo>> areaList(Short cityID, Integer page, Integer pageSize) {
+    public ApiResult<ApiList<TestUserVo>> userList(Short cityID, Integer page, Integer pageSize) {
         cityID = Optional.ofNullable(cityID).orElse((short) 0);
         page     = Optional.ofNullable(page).orElse(1);
         pageSize = Optional.ofNullable(pageSize).orElse(10);
@@ -67,5 +69,21 @@ public class MybatisController {
         ApiList<TestUserVo> apiList = new ApiList<>(userData.getHasNext(), listView);
 
         return Response.makeOKRsp(apiList);
+    }
+
+    @PostMapping("adduser")
+    public ApiResult<TestUserVo> addUser(String username, Short sex, Short cityID, String mobile) {
+        //新增实体数据
+        TestUser testUser = new TestUser();
+        testUser.setUsername(username);
+        testUser.setSex(sex);
+        testUser.setCityId(cityID);
+        testUser.setMobile(mobile);
+        testUser.setId(testUserService.addUser(testUser));
+        //返回结果
+        TestUserVo testUserVo = new TestUserVo();
+        BeanUtil.copyProperties(testUser,testUserVo);
+
+        return Response.makeOKRsp(testUserVo);
     }
 }

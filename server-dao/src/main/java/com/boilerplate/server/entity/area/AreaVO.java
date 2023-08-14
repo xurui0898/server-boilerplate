@@ -48,6 +48,9 @@ public class AreaVO {
     private Integer createdAt;
     //返回格式化日期时间
     public String getCreatedAt() {
+        if (createdAt == null) {
+            return "";
+        }
         String format = "yyyy-MM-dd HH:mm:ss";
         return DateFormatUtils.format(createdAt * 1000L, format);
     }

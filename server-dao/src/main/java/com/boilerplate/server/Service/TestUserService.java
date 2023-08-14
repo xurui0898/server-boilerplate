@@ -37,4 +37,13 @@ public class TestUserService {
 
         return new ApiList<>(hasNext, list);
     }
+
+    /**
+     * 新增用户
+     * @param testUser
+     * @return
+     */
+    public int addUser(TestUser testUser) {
+        return testUserMapper.insertSelective(testUser);
+    }
 }

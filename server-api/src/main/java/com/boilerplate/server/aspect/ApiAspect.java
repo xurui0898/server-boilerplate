@@ -66,8 +66,7 @@ public class ApiAspect {
                 list.add(new Gson().toJson(o));
             }
             systemLog.setParams(list.toString());
+            log.info(new Gson().toJson(systemLog));
         }catch (Exception e){ }
-
-        log.info(new Gson().toJson(systemLog));
     }
 }
