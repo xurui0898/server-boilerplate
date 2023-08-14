@@ -73,17 +73,21 @@ public class MybatisController {
 
     @PostMapping("adduser")
     public ApiResult<TestUserVo> addUser(String username, Short sex, Short cityID, String mobile) {
-        //新增实体数据
-        TestUser testUser = new TestUser();
-        testUser.setUsername(username);
-        testUser.setSex(sex);
-        testUser.setCityId(cityID);
-        testUser.setMobile(mobile);
-        testUserService.addUser(testUser);
-        //返回结果
-        TestUserVo testUserVo = new TestUserVo();
-        BeanUtil.copyProperties(testUser,testUserVo);
+        try {
+            //新增实体数据
+            TestUser testUser = new TestUser();
+            testUser.setUsername(username);
+            testUser.setSex(sex);
+            testUser.setCityId(cityID);
+            testUser.setMobile(mobile);
+            testUserService.addUser(testUser);
+            //返回结果
+            TestUserVo testUserVo = new TestUserVo();
+            BeanUtil.copyProperties(testUser,testUserVo);
 
-        return Response.makeOKRsp(testUserVo);
+            return Response.makeOKRsp(testUserVo);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
     }
 }

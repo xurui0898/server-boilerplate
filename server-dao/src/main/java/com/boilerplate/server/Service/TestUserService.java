@@ -7,6 +7,7 @@ import com.boilerplate.server.model.TestUserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -43,7 +44,10 @@ public class TestUserService {
      * @param testUser
      * @return
      */
-    public int addUser(TestUser testUser) {
+    public int addUser(TestUser testUser) throws Exception {
+        if (testUser.getCreateTime() == null) {
+            testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        }
         return testUserMapper.insertSelective(testUser);
     }
 }
