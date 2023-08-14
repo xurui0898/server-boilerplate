@@ -79,7 +79,7 @@ public class MybatisController {
         testUser.setSex(sex);
         testUser.setCityId(cityID);
         testUser.setMobile(mobile);
-        testUser.setId(testUserService.addUser(testUser));
+        testUserService.addUser(testUser);
         //返回结果
         TestUserVo testUserVo = new TestUserVo();
         BeanUtil.copyProperties(testUser,testUserVo);
