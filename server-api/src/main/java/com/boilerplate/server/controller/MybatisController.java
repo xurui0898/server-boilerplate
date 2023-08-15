@@ -11,6 +11,7 @@ import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.TestUser;
+import com.boilerplate.server.service.ValidatorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,6 +81,32 @@ public class MybatisController {
             TestUser testUser = new TestUser();
             BeanUtil.copyProperties(addUserDTO,testUser);
             testUserService.addUser(testUser);
+            //返回结果
+            TestUserVo testUserVo = new TestUserVo();
+            BeanUtil.copyProperties(testUser,testUserVo);
+
+            return Response.makeOKRsp(testUserVo);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
+    @PostMapping("addnewuser")
+    public ApiResult<TestUserVo> addNewUser(String username, Short sex, Short cityId, String mobile) {
+        try {
+            //参数实体
+            AddUserDTO addUserDTO = new AddUserDTO();
+            addUserDTO.setUsername(username);
+            addUserDTO.setSex(sex);
+            addUserDTO.setCityId(cityId);
+            addUserDTO.setMobile(mobile);
+            ValidatorUtils.validate(addUserDTO);
+
+            //新增实体数据
+            TestUser testUser = new TestUser();
+            BeanUtil.copyProperties(addUserDTO,testUser);
+            testUserService.addUser(testUser);
+
             //返回结果
             TestUserVo testUserVo = new TestUserVo();
             BeanUtil.copyProperties(testUser,testUserVo);

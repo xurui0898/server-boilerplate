@@ -44,7 +44,7 @@ public class TestUserService {
      * @param testUser
      * @return
      */
-    public int addUser(TestUser testUser) throws Exception {
+    public int addUser(TestUser testUser) {
         if (testUser.getCreateTime() == null) {
             testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
