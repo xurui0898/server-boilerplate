@@ -3,9 +3,10 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.Service.AreaService;
 import com.boilerplate.server.Service.TestUserService;
+import com.boilerplate.server.entity.AddUserDTO;
+import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
-import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.model.Area;
@@ -13,10 +14,11 @@ import com.boilerplate.server.model.TestUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,14 +74,11 @@ public class MybatisController {
     }
 
     @PostMapping("adduser")
-    public ApiResult<TestUserVo> addUser(String username, Short sex, Short cityID, String mobile) {
+    public ApiResult<TestUserVo> addUser(@Valid @RequestBody AddUserDTO addUserDTO) {
         try {
             //新增实体数据
             TestUser testUser = new TestUser();
-            testUser.setUsername(username);
-            testUser.setSex(sex);
-            testUser.setCityId(cityID);
-            testUser.setMobile(mobile);
+            BeanUtil.copyProperties(addUserDTO,testUser);
             testUserService.addUser(testUser);
             //返回结果
             TestUserVo testUserVo = new TestUserVo();

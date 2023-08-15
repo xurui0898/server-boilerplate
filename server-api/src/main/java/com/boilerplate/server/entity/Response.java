@@ -20,12 +20,12 @@ public class Response {
         return new ApiResult<T>().setCode(ResultCode.FAIL).setMsg(message);
     }
 
-    public static <T> ApiResult<T> makeErrRsp(String message, T data) {
-        return new ApiResult<T>().setCode(ResultCode.FAIL).setData(data).setMsg(message);
+    //自定义类型
+    public static <T> ApiResult<T> makeErrRsp(ResultCode resultCode, String message) {
+        return new ApiResult<T>().setCode(resultCode).setMsg(message);
     }
 
-    //自定义类型
-    public static <T> ApiResult<T> makeRsp(ResultCode resultCode) {
+    public static <T> ApiResult<T> makeErrRsp(ResultCode resultCode) {
         return new ApiResult<T>().setCode(resultCode);
     }
 }

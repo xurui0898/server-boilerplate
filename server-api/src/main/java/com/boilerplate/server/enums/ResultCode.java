@@ -10,6 +10,10 @@ public enum ResultCode {
     SUCCESS(200,"成功"),
     //失败
     FAIL(201,"失败"),
+    //参数错误
+    VALID(202, "参数错误"),
+    //网络异常
+    EXCEPTION(203,"系统异常"),
     //未认证
     UNAUTHORIZED(401,"签名错误");
 
