@@ -1,11 +1,17 @@
 package com.boilerplate.server.entity.testuser;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.sql.Timestamp;
 
+/**
+ * @JsonInclude(JsonInclude.Include.NON_NULL)
+ * 在实体类上加入此注解，接口返回值可以剔除掉不需要的null属性
+ */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TestUserVo {
     /**
      *
