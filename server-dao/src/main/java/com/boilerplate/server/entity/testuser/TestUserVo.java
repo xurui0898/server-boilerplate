@@ -51,7 +51,7 @@ public class TestUserVo {
     //返回格式化日期时间
     public String getCreateTime() {
         if (createTime == null) {
-            return "";
+            return null;
         }
         String format = "yyyy-MM-dd HH:mm:ss";
         return DateFormatUtils.format(createTime, format);

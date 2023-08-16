@@ -3,10 +3,7 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.Service.AreaService;
 import com.boilerplate.server.Service.TestUserService;
-import com.boilerplate.server.entity.AddUserDTO;
-import com.boilerplate.server.entity.ApiList;
-import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.entity.*;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.model.Area;
@@ -107,6 +104,23 @@ public class MybatisController {
             BeanUtil.copyProperties(addUserDTO,testUser);
             testUserService.addUser(testUser);
 
+            //返回结果
+            TestUserVo testUserVo = new TestUserVo();
+            BeanUtil.copyProperties(testUser,testUserVo);
+
+            return Response.makeOKRsp(testUserVo);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
+    @PostMapping("updateuser")
+    public ApiResult<TestUserVo> updateUser(@Valid @RequestBody UpdateUserDTO updateUserDTO) {
+        try {
+            //更新实体数据
+            TestUser testUser = new TestUser();
+            BeanUtil.copyProperties(updateUserDTO,testUser);
+            testUserService.updateUser(testUser);
             //返回结果
             TestUserVo testUserVo = new TestUserVo();
             BeanUtil.copyProperties(testUser,testUserVo);

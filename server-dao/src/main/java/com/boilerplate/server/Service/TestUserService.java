@@ -50,4 +50,13 @@ public class TestUserService {
         }
         return testUserMapper.insertSelective(testUser);
     }
+
+    /**
+     * 按ID更新用户
+     * @param testUser
+     * @return
+     */
+    public int updateUser(TestUser testUser){
+        return testUserMapper.updateByPrimaryKeySelective(testUser);
+    }
 }

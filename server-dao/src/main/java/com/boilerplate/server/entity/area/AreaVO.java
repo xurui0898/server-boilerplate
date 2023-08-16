@@ -49,7 +49,7 @@ public class AreaVO {
     //返回格式化日期时间
     public String getCreatedAt() {
         if (createdAt == null) {
-            return "";
+            return null;
         }
         String format = "yyyy-MM-dd HH:mm:ss";
         return DateFormatUtils.format(createdAt * 1000L, format);
