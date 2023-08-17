@@ -6,6 +6,7 @@ import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.model.TestUserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -44,6 +45,7 @@ public class TestUserService {
      * @param testUser
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public int addUser(TestUser testUser) {
         if (testUser.getCreateTime() == null) {
             testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -56,6 +58,7 @@ public class TestUserService {
      * @param testUser
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public int updateUser(TestUser testUser){
         return testUserMapper.updateByPrimaryKeySelective(testUser);
     }
