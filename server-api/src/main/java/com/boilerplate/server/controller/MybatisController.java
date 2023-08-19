@@ -130,4 +130,15 @@ public class MybatisController {
             return Response.makeErrRsp(e.getMessage());
         }
     }
+
+    @PostMapping("countuser")
+    public ApiResult<Integer> countUser(Short sex, Short cityId) {
+        try {
+            int total = testUserService.countUser(sex, cityId);
+
+            return Response.makeOKRsp(total);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
 }

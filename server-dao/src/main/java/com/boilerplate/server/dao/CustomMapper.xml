@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boilerplate.server.dao.CustomMapper">
+    <select id="countTestUser" parameterType="Map" resultType="java.lang.Integer">
+        select count(id) as total
+        from test_user
+        where sex = #{sex} AND city_id = #{cityId}
+    </select>
+
+</mapper>

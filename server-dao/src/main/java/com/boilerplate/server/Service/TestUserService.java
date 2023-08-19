@@ -15,6 +15,8 @@ import java.util.List;
 public class TestUserService {
     @Autowired
     private TestUserMapper testUserMapper;
+    @Autowired
+    private CustomQueryService customQueryService;
 
     /**
      * 根据城市ID查询用户列表 分页查询
@@ -61,5 +63,15 @@ public class TestUserService {
     @Transactional(rollbackFor = Exception.class)
     public int updateUser(TestUser testUser){
         return testUserMapper.updateByPrimaryKeySelective(testUser);
+    }
+
+    /**
+     * 自定义SQL查询 统计用户数量
+     * @param sex
+     * @param cityId
+     * @return
+     */
+    public int countUser(Short sex, Short cityId){
+        return customQueryService.countTestUser(sex, cityId);
     }
 }
