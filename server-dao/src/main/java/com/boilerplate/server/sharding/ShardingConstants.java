@@ -1,6 +1,10 @@
 package com.boilerplate.server.sharding;
 
 public class ShardingConstants {
+    /**
+     * sharding-jdbc 分库分表数据源名称
+     */
+    public static final String SHARDING_DATA_SOURCE_NAME = "sharding-data-source";
 
     //系统默认最大分区数
     public static final int SHARDING_LENGTH = 1024;

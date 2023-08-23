@@ -33,6 +33,7 @@
         <hutool.version>5.8.18</hutool.version>
         <validation.version>2.2.1.RELEASE</validation.version>
         <sharding.jdbc.version>4.1.1</sharding.jdbc.version>
+        <dynamic.datasource.version>3.3.2</dynamic.datasource.version>
     </properties>
 
     <dependencyManagement>
@@ -95,6 +96,12 @@
                 <groupId>org.apache.shardingsphere</groupId>
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding.jdbc.version}</version>
+            </dependency>
+            <!-- 多数据源管理 dynamic-datasource-spring-boot-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic.datasource.version}</version>
             </dependency>
 
             <!--安全管理权限验证框架 shiro-->

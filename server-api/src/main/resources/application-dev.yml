@@ -12,15 +12,23 @@ spring:
     port: 6389 # Redis服务器连接端口
     password: # Redis服务器连接密码（默认为空）
 
+  datasource:
+    # 动态数据源配置
+    dynamic:
+      datasource:
+        master:
+          type: com.alibaba.druid.pool.DruidDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/uyes_ptj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+          username: root
+          password: root
+      # 指定默认数据源名称
+      primary: master
+
   shardingsphere:
+    # 定义数据源
     datasource:
-      names: uyes-ptj,ds0,ds1,ds2,ds3
-      uyes-ptj:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/uyes_ptj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
-        username: root
-        password: root
+      names: ds0,ds1,ds2,ds3
       ds0:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.cj.jdbc.Driver
@@ -46,12 +54,11 @@ spring:
         username: root
         password: root
     props:
-      # 日志显示 SQL
+      # 日志显示SQL
       sql.show: true
     sharding:
-      default-data-source-name: uyes-ptj
       tables:
-        # 订单表基础表
+        # 逻辑表-订单表基础表
         t_ent_order:
           # 真实表
           actualDataNodes: ds$->{0..3}.t_ent_order
@@ -63,7 +70,8 @@ spring:
           # 分表策略
           tableStrategy:
             none:
-        # 订单条目表
+
+        # 逻辑表-订单条目表
         t_ent_order_item:
           # 真实表
           actualDataNodes: ds$->{0..3}.t_ent_order_item_$->{0..7}
@@ -77,7 +85,8 @@ spring:
             complex:
               sharding-columns: id,ent_id
               algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
-        # 订单详情表
+
+        # 逻辑表-订单详情表
         t_ent_order_detail:
           # 真实表
           actualDataNodes: ds$->{0..3}.t_ent_order_detail
