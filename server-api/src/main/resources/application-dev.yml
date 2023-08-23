@@ -6,12 +6,90 @@ logging:
   path: /tmp/logs
 
 spring:
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/uyes_ptj?useUnicode=true&characterEncoding=UTF-8
-    username: root
-    password: root
   redis:
     host: 127.0.0.1 # Redis服务器地址
     database: 0 # Redis数据库索引（默认为0）
     port: 6389 # Redis服务器连接端口
     password: # Redis服务器连接密码（默认为空）
+
+  shardingsphere:
+    datasource:
+      names: uyes-ptj,ds0,ds1,ds2,ds3
+      uyes-ptj:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/uyes_ptj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+        username: root
+        password: root
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_0?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+        username: root
+        password: root
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_1?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+        username: root
+        password: root
+      ds2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_2?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+        username: root
+        password: root
+      ds3:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3306/ds_3?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useTimezone=true
+        username: root
+        password: root
+    props:
+      # 日志显示 SQL
+      sql.show: true
+    sharding:
+      default-data-source-name: uyes-ptj
+      tables:
+        # 订单表基础表
+        t_ent_order:
+          # 真实表
+          actualDataNodes: ds$->{0..3}.t_ent_order
+          # 分库策略
+          databaseStrategy:
+            complex:
+              sharding-columns: id,ent_id
+              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+          # 分表策略
+          tableStrategy:
+            none:
+        # 订单条目表
+        t_ent_order_item:
+          # 真实表
+          actualDataNodes: ds$->{0..3}.t_ent_order_item_$->{0..7}
+          # 分库策略
+          databaseStrategy:
+            complex:
+              sharding-columns: id,ent_id
+              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+          # 分表策略
+          tableStrategy:
+            complex:
+              sharding-columns: id,ent_id
+              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+        # 订单详情表
+        t_ent_order_detail:
+          # 真实表
+          actualDataNodes: ds$->{0..3}.t_ent_order_detail
+          # 分库策略
+          databaseStrategy:
+            complex:
+              sharding-columns: id,ent_id
+              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+          # 分表策略
+          tableStrategy:
+            complex:
+              sharding-columns: id,ent_id
+              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+      bindingTables:
+        - t_ent_order,t_ent_order_detail

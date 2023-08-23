@@ -1,21 +1,6 @@
 spring:
   profiles:
     active: @profileActive@
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    maxActive: 20
-    initialSize: 1
-    minIdle: 1
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
 
 elasticsearch:
   host: 127.0.0.1
