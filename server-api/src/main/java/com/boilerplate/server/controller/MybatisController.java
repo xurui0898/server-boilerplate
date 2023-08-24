@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +139,29 @@ public class MybatisController {
             int total = testUserService.countUser(sex, cityId);
 
             return Response.makeOKRsp(total);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
+    @PostMapping("adduserbatch")
+    public ApiResult<String> addUserBatch(@Valid @RequestBody AddUserDTO addUserDTO) {
+        try {
+            long start = System.currentTimeMillis();
+            List<TestUser> userList = new ArrayList<>();
+            for(int i = 1 ;i <= 100; i++) {
+                TestUser testUser = new TestUser();
+                testUser.setUsername(addUserDTO.getUsername()+i);
+                testUser.setSex(addUserDTO.getSex());
+                testUser.setCityId(addUserDTO.getCityId());
+                testUser.setMobile(addUserDTO.getMobile());
+                testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+                userList.add(testUser);
+            }
+            testUserService.insertTestUserBatch(userList);
+            long end = System.currentTimeMillis();
+            String msg = "100条数据总耗时：" + (end - start) + "ms";
+            return Response.makeOKRsp(msg);
         } catch (Exception e) {
             return Response.makeErrRsp(e.getMessage());
         }

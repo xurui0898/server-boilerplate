@@ -74,4 +74,13 @@ public class TestUserService {
     public int countUser(Short sex, Short cityId){
         return customQueryService.countTestUser(sex, cityId);
     }
+
+    /**
+     * 自定义SQL查询 批量新增用户
+     * @param userList
+     * @return
+     */
+    public int insertTestUserBatch (List<TestUser> userList) {
+        return customQueryService.insertTestUserBatch(userList);
+    }
 }
