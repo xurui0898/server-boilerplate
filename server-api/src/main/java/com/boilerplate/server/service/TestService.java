@@ -198,7 +198,7 @@ public class TestService {
 
     /**
      * 生成唯一订单号
-     * 当前年月日6位+当天运行秒数5位+随机数2位+用户ID后5位=18位
+     * 当前年月日6位+当天运行秒数5位+随机数2位+用户ID后6位=19位
      */
     public static void orderNo(Long userId){
         Date date = DateUtil.date();
@@ -210,8 +210,8 @@ public class TestService {
         String betSecond = StringUtils.leftPad(String.valueOf(between), 5, "0");
         //生成随机数-2位
         String ranNum = StringUtils.leftPad(String.valueOf(RandomUtil.randomInt(1, 99)), 2, "0");
-        //截取用户ID后5位
-        String subUserId = StringUtils.leftPad(StringUtils.right(String.valueOf(userId), 5), 5, "0");
+        //截取用户ID后6位
+        String subUserId = StringUtils.leftPad(StringUtils.right(String.valueOf(userId), 6), 6, "0");
 
         Long orderNo = Long.valueOf(ymd+betSecond+ranNum+subUserId);
         System.out.println(orderNo);
