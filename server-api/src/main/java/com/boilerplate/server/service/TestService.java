@@ -198,23 +198,20 @@ public class TestService {
 
     /**
      * 生成唯一订单号
-     * 当前年月日6位+当天运行秒数5位+随机数3位+用户ID后4位=18位
+     * 当前年月日6位+当天运行秒数5位+随机数2位+用户ID后5位=18位
      */
     public static void orderNo(Long userId){
         Date date = DateUtil.date();
         //当前年月日-6位
         String ymd = StringUtils.right(DateUtil.format(date, DatePattern.PURE_DATE_PATTERN),6);
-        System.out.println(ymd);
         //当天运行秒数-5位
         Date beginOfDay = DateUtil.beginOfDay(date);
-        long betSecond = DateUtil.between(beginOfDay, date, DateUnit.SECOND);
-        System.out.println(betSecond);
-        //生成随机数-3位
-        String ranNum = StringUtils.leftPad(String.valueOf(RandomUtil.randomInt(1, 999)), 3, "0");
-        System.out.println(ranNum);
-        //截取用户ID后4位
-        String subUserId = StringUtils.leftPad(StringUtils.right(String.valueOf(userId), 4), 4, "0");
-        System.out.println(subUserId);
+        long between = DateUtil.between(beginOfDay, date, DateUnit.SECOND);
+        String betSecond = StringUtils.leftPad(String.valueOf(between), 5, "0");
+        //生成随机数-2位
+        String ranNum = StringUtils.leftPad(String.valueOf(RandomUtil.randomInt(1, 99)), 2, "0");
+        //截取用户ID后5位
+        String subUserId = StringUtils.leftPad(StringUtils.right(String.valueOf(userId), 5), 5, "0");
 
         Long orderNo = Long.valueOf(ymd+betSecond+ranNum+subUserId);
         System.out.println(orderNo);
