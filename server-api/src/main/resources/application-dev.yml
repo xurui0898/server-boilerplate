@@ -58,49 +58,33 @@ spring:
       sql.show: true
     sharding:
       tables:
-        # 逻辑表-订单表基础表
-        t_ent_order:
+        # 订单表
+        user_order:
           # 真实表
-          actualDataNodes: ds$->{0..3}.t_ent_order_$->{0..3}
+          actualDataNodes: ds$->{0..3}.user_order_$->{0..15}
           # 分库策略
           databaseStrategy:
             complex:
-              sharding-columns: id
+              sharding-columns: order_id,customer_id
               algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
           # 分表策略
           tableStrategy:
             complex:
-              sharding-columns: id
+              sharding-columns: order_id,customer_id
               algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
-
-        # 逻辑表-订单条目表
-        t_ent_order_item:
+        # 订单商品表
+        user_order_item:
           # 真实表
-          actualDataNodes: ds$->{0..3}.t_ent_order_item_$->{0..7}
+          actualDataNodes: ds$->{0..3}.user_order_item_$->{0..15}
           # 分库策略
           databaseStrategy:
             complex:
-              sharding-columns: id,ent_id
-              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+              sharding-columns: order_id,customer_id
+              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
           # 分表策略
           tableStrategy:
             complex:
-              sharding-columns: id,ent_id
-              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
-
-        # 逻辑表-订单详情表
-        t_ent_order_detail:
-          # 真实表
-          actualDataNodes: ds$->{0..3}.t_ent_order_detail
-          # 分库策略
-          databaseStrategy:
-            complex:
-              sharding-columns: id,ent_id
-              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
-          # 分表策略
-          tableStrategy:
-            complex:
-              sharding-columns: id,ent_id
-              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+              sharding-columns: order_id,customer_id
+              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
       bindingTables:
-        - t_ent_order,t_ent_order_detail
+        - user_order,user_order_item

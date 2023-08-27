@@ -28,9 +28,17 @@
         </javaClientGenerator>
 
         <!--自动生成表配置-->
-        <table schema="" tableName="test_user" domainObjectName="TestUser">
-            <generatedKey column="id" sqlStatement="JDBC"/>
-            <columnOverride column="sex" jdbcType="SMALLINT" javaType="java.lang.Short">
+        <table schema="" tableName="user_order" domainObjectName="UserOrder">
+            <columnOverride column="pay_status" jdbcType="SMALLINT" javaType="java.lang.Short">
+            </columnOverride>
+            <columnOverride column="create_time" javaType="java.sql.Timestamp">
+            </columnOverride>
+            <columnOverride column="update_time" javaType="java.sql.Timestamp">
+            </columnOverride>
+        </table>
+
+        <table schema="" tableName="user_order_item" domainObjectName="UserOrderItem">
+            <columnOverride column="status" jdbcType="SMALLINT" javaType="java.lang.Short">
             </columnOverride>
             <columnOverride column="create_time" javaType="java.sql.Timestamp">
             </columnOverride>

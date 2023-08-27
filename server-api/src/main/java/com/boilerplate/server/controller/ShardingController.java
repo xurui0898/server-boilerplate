@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 /**
  * Sharding-jdbc 分库分表测试
  */
@@ -21,33 +19,15 @@ public class ShardingController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("query")
-    public ApiResult<Map<String, Object>> queryOrder(String orderId) {
+    @GetMapping("createorder")
+    public ApiResult<Long> createOrder() {
         try {
-            Map<String, Object> orderMap = orderService.queryOrder(Long.valueOf(orderId));
-            return Response.makeOKRsp(orderMap);
-        } catch (Exception e) {
-            return Response.makeErrRsp(e.getMessage());
-        }
-    }
-
-    @GetMapping("save")
-    public ApiResult<String> save() {
-        try {
-            orderService.save();
-            return Response.makeOKRsp("SUCCESS");
-        } catch (Exception e) {
-            return Response.makeErrRsp(e.getMessage());
-        }
-    }
-
-    @GetMapping("saveorder")
-    public ApiResult<Long> saveOrder() {
-        try {
-            Long orderId = orderService.saveOrder();
+            Long orderId = orderService.createTestOrder();
             return Response.makeOKRsp(orderId);
         } catch (Exception e) {
+            log.info(e.toString());
             return Response.makeErrRsp(e.getMessage());
         }
     }
+
 }
