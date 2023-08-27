@@ -1,6 +1,7 @@
 package com.boilerplate.server.sharding;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.boilerplate.server.Service.OrderIdService;
 import com.boilerplate.server.dao.OrderMapper;
 import com.boilerplate.server.model.TEntOrder;
 import com.boilerplate.server.model.TEntOrderDetail;
@@ -79,6 +80,24 @@ public class OrderService {
             item2.setGoodName("我的商品22222");
             orderMapper.saveOrderItem(item2);
         }
+    }
+
+    @Transactional
+    public Long saveOrder() {
+        Long entId = 12L;
+        String regionCode = "ZJ";
+        Long userId = 12797546L;
+
+        //保存订单基本信息
+        TEntOrder tEntOrder = new TEntOrder();
+        Long orderId = OrderIdService.genOrderId(userId);
+        tEntOrder.setId(orderId);
+        tEntOrder.setRegionCode(regionCode);
+        tEntOrder.setAmount(new BigDecimal(18.8));
+        tEntOrder.setMobile("150****1846");
+        tEntOrder.setEntId(entId);
+        orderMapper.saveOrder(tEntOrder);
+        return orderId;
     }
 
 }

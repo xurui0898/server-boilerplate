@@ -61,15 +61,17 @@ spring:
         # 逻辑表-订单表基础表
         t_ent_order:
           # 真实表
-          actualDataNodes: ds$->{0..3}.t_ent_order
+          actualDataNodes: ds$->{0..3}.t_ent_order_$->{0..3}
           # 分库策略
           databaseStrategy:
             complex:
-              sharding-columns: id,ent_id
-              algorithm-class-name: com.boilerplate.server.sharding.HashSlotAlgorithm
+              sharding-columns: id
+              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
           # 分表策略
           tableStrategy:
-            none:
+            complex:
+              sharding-columns: id
+              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
 
         # 逻辑表-订单条目表
         t_ent_order_item:

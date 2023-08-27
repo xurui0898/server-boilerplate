@@ -26,7 +26,5 @@ public class IndexController {
         TestService.stackHandle();
         //数组测试
         TestService.arrayHandel();
-        //生成唯一订单号
-        TestService.orderNo(58097544L);
     }
 }

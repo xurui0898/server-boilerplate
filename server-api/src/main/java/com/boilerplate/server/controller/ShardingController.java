@@ -40,4 +40,14 @@ public class ShardingController {
             return Response.makeErrRsp(e.getMessage());
         }
     }
+
+    @GetMapping("saveorder")
+    public ApiResult<Long> saveOrder() {
+        try {
+            Long orderId = orderService.saveOrder();
+            return Response.makeOKRsp(orderId);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
 }
