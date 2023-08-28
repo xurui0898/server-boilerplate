@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  * 1、目前处理 = 和 in 操作，其余的操作，比如 >、< 等不支持。
  */
 public class OrderShardingAlgorithm implements ComplexKeysShardingAlgorithm<BigDecimal> {
-
     /**
      * 订单id字段
      */

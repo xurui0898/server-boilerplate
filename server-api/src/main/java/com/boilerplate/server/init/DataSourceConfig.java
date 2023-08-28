@@ -6,7 +6,7 @@ import com.baomidou.dynamic.datasource.provider.DynamicDataSourceProvider;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
-import com.boilerplate.server.sharding.ShardingConstants;
+import com.boilerplate.server.sharding.ShardingUtils;
 import org.apache.shardingsphere.shardingjdbc.jdbc.adapter.AbstractDataSourceAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 /**
  * DataSourceConfig作用：将ShardingJDBC数据源配置为动态数据源之一
- * 使用 sharding-jdbc 分库分表数据源 => @DS(ShardingConstants.SHARDING_DATA_SOURCE_NAME)
+ * 使用 sharding-jdbc 分库分表数据源 => @DS(ShardingUtils.SHARDING_DATA_SOURCE_NAME)
  */
 @Configuration
 @AutoConfigureBefore({DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class})
@@ -53,7 +53,7 @@ public class DataSourceConfig {
             public Map<String, DataSource> loadDataSources() {
                 Map<String, DataSource> dataSourceMap = createDataSourceMap(datasourceMap);
                 // 将sharding-jdbc管理的数据源也交给动态数据源管理
-                dataSourceMap.put(ShardingConstants.SHARDING_DATA_SOURCE_NAME, shardingDataSource);
+                dataSourceMap.put(ShardingUtils.SHARDING_DATA_SOURCE_NAME, shardingDataSource);
                 return dataSourceMap;
             }
         };

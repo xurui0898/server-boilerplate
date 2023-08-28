@@ -1,4 +1,4 @@
-package com.boilerplate.server.Service;
+package com.boilerplate.server.sharding;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUnit;
@@ -8,7 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
-public class OrderIdService {
+public class ShardingUtils {
+    //sharding-jdbc 分库分表数据源名称
+    public static final String SHARDING_DATA_SOURCE_NAME = "sharding-data-source";
+
     /**
      * 生成唯一订单号
      * 当前年月日6位+当天运行秒数5位+随机数3位+用户ID后5位=19位
