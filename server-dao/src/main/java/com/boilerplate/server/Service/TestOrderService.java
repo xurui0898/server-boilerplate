@@ -1,17 +1,25 @@
 package com.boilerplate.server.Service;
 
+import cn.hutool.core.lang.Snowflake;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.boilerplate.server.dao.UserOrderItemMapper;
 import com.boilerplate.server.dao.UserOrderMapper;
+import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
+import com.boilerplate.server.model.UserOrderItem;
 import com.boilerplate.server.sharding.RandomUtils;
 import com.boilerplate.server.sharding.ShardingUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @DS(ShardingUtils.SHARDING_DATA_SOURCE_NAME)
@@ -29,7 +37,7 @@ public class TestOrderService {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long createOrder() {
+    public OrderVo createOrder() {
         Long userId = randomUtils.getUserId();
         Long shopId = randomUtils.getShopId();
         Long orderId = ShardingUtils.genOrderId(userId);
@@ -40,14 +48,42 @@ public class TestOrderService {
         order.setCustomerId(userId);
         order.setCustomerName(randomUtils.getName());
         order.setCustomerMobile(randomUtils.getMobile());
-        order.setCustomerCity(101);
+        //100-200随机id
+        order.setCustomerCity(RandomUtil.randomInt(100, 200));
         order.setCustomerAddress(randomUtils.getAddress());
-        order.setOrderPrice(new BigDecimal("131.98"));
+        //100-300随机金额保留2位小数
+        order.setOrderPrice(new BigDecimal(String.format("%.2f", Math.random()*100+200)));
         order.setCreateTime(new Timestamp(System.currentTimeMillis()));
         order.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-
         userOrderMapper.insertSelective(order);
-        return order.getOrderId();
+
+        //订单商品表
+        List<UserOrderItem> userOrderItems = new ArrayList<>();
+        Snowflake snowflake = IdUtil.getSnowflake(1, 1);
+        int itemsNum = RandomUtil.randomInt(1, 4);
+        long itemId;
+        for (int i = 0; i < itemsNum; i++) {
+            itemId = snowflake.nextId();
+            UserOrderItem orderItem = new UserOrderItem();
+            orderItem.setItemId(itemId);
+            orderItem.setItemName(randomUtils.getGoods());
+            orderItem.setItemPrice(new BigDecimal(String.format("%.2f", Math.random()*10+80)));
+            orderItem.setOrderId(orderId);
+            orderItem.setShopId(shopId);
+            orderItem.setCustomerId(userId);
+            orderItem.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            userOrderItemMapper.insertSelective(orderItem);
+            userOrderItems.add(orderItem);
+        }
+
+        //返回数据
+        String subUserId = StringUtils.right(String.valueOf(userId), 5);
+        OrderVo orderVo = new OrderVo();
+        orderVo.shardingDataBase = Integer.parseInt(subUserId) % 4;
+        orderVo.shardingTable = Integer.parseInt(subUserId) % 16;
+        orderVo.orderData = order;
+        orderVo.orderItems = userOrderItems;
+        return orderVo;
     }
 
 }

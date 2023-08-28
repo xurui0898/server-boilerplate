@@ -3,6 +3,7 @@ package com.boilerplate.server.controller;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.Service.TestOrderService;
+import com.boilerplate.server.entity.order.OrderVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +21,10 @@ public class ShardingController {
     private TestOrderService testOrderService;
 
     @GetMapping("createorder")
-    public ApiResult<Long> createOrder() {
+    public ApiResult<OrderVo> createOrder() {
         try {
-            Long orderId = testOrderService.createOrder();
-            return Response.makeOKRsp(orderId);
+            OrderVo orderVo = testOrderService.createOrder();
+            return Response.makeOKRsp(orderVo);
         } catch (Exception e) {
             log.info(e.toString());
             return Response.makeErrRsp(e.getMessage());
