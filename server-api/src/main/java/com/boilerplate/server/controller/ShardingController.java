@@ -31,4 +31,15 @@ public class ShardingController {
         }
     }
 
+    @GetMapping("queryorder")
+    public ApiResult<OrderVo> queryOrder(Long orderId) {
+        try {
+            OrderVo orderVo = testOrderService.queryOrder(orderId);
+            return Response.makeOKRsp(orderVo);
+        } catch (Exception e) {
+            log.info(e.toString());
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
 }

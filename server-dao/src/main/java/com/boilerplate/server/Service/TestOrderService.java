@@ -30,6 +30,8 @@ public class TestOrderService {
     private UserOrderItemMapper userOrderItemMapper;
     @Autowired
     private RandomUtils randomUtils;
+    @Autowired
+    private CustomQueryService customQueryService;
 
     /**
      * 创建测试订单
@@ -75,6 +77,31 @@ public class TestOrderService {
             userOrderItemMapper.insertSelective(orderItem);
             userOrderItems.add(orderItem);
         }
+
+        //返回数据
+        String subUserId = StringUtils.right(String.valueOf(userId), 5);
+        OrderVo orderVo = new OrderVo();
+        orderVo.shardingDataBase = Integer.parseInt(subUserId) % 4;
+        orderVo.shardingTable = Integer.parseInt(subUserId) % 16;
+        orderVo.orderData = order;
+        orderVo.orderItems = userOrderItems;
+        return orderVo;
+    }
+
+    /**
+     * 根据订单号查询订单
+     * @param orderId
+     * @return
+     */
+    public OrderVo queryOrder(Long orderId) {
+        //查询订单表
+        UserOrder order = customQueryService.getOrderByOrderId(orderId);
+        if (order == null) {
+            return null;
+        }
+        Long userId = order.getCustomerId();
+        //订单商品
+        List<UserOrderItem> userOrderItems = customQueryService.getOrderItemsByOrderId(orderId);
 
         //返回数据
         String subUserId = StringUtils.right(String.valueOf(userId), 5);
