@@ -53,6 +53,15 @@ public class CustomQueryService {
     }
 
     /**
+     * 自定义SQL查询 根据用户ID查询订单列表
+     * @param customerId
+     * @return
+     */
+    public List<UserOrder> getOrderListByCustomerId (Long customerId) {
+        return sqlSessionTemplate.selectList(CUSTOM_DAO_SPACE + "getOrderListByCustomerId", customerId);
+    }
+
+    /**
      * 自定义SQL查询 根据订单号查询订单商品
      * @param orderId
      * @return

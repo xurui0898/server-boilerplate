@@ -113,4 +113,14 @@ public class TestOrderService {
         return orderVo;
     }
 
+    /**
+     * 获取订单列表
+     * @param customerId
+     * @return
+     */
+    public List<UserOrder> getOrderList(Long customerId) {
+        List<UserOrder> orderList = customQueryService.getOrderListByCustomerId(customerId);
+        return orderList;
+    }
+
 }
