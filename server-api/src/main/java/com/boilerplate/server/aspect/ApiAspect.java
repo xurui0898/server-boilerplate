@@ -22,17 +22,12 @@ public class ApiAspect {
      * 针对Service接口添加环绕切面处理
      */
     @Around("execution(public * com.boilerplate.server.controller.*Controller.*(..))")
-    public Object aroundController(ProceedingJoinPoint joinPoint) throws IllegalAccessException, InstantiationException {
-        try {
-            long beginTime = System.currentTimeMillis();
-            Object result = joinPoint.proceed(joinPoint.getArgs());
-            long execTime = System.currentTimeMillis() - beginTime;
-            commonService.writeSystemLog(joinPoint, execTime, result);
+    public Object aroundController(ProceedingJoinPoint joinPoint) throws Throwable {
+        long beginTime = System.currentTimeMillis();
+        Object result = joinPoint.proceed(joinPoint.getArgs());
+        long execTime = System.currentTimeMillis() - beginTime;
+        commonService.writeSystemLog(joinPoint, execTime, result);
 
-            return result;
-        } catch (Throwable throwable) {
-            log.info("[请求异常]" + throwable.toString());
-            return null;
-        }
+        return result;
     }
 }

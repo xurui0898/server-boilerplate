@@ -7,12 +7,13 @@ import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
+@Validated
 @RequestMapping("sharding")
 public class ShardingController {
     @Autowired
@@ -37,7 +39,7 @@ public class ShardingController {
     }
 
     @GetMapping("queryOrder")
-    public ApiResult<OrderVo> queryOrder(Long orderId) {
+    public ApiResult<OrderVo> queryOrder(@Valid @NotNull(message = "订单号不能为空")Long orderId) {
         try {
             OrderVo orderVo = testOrderService.queryOrder(orderId);
             return Response.makeOKRsp(orderVo);
@@ -47,8 +49,19 @@ public class ShardingController {
         }
     }
 
+    @GetMapping("batchQueryOrder")
+    public ApiResult<List<UserOrder>> batchQueryOrder(List<Long> orderIds) {
+        try {
+            List<UserOrder> orderList = testOrderService.queryOrder(orderIds);
+            return Response.makeOKRsp(orderList);
+        } catch (Exception e) {
+            log.info(e.toString());
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
     @GetMapping("getOrderList")
-    public ApiResult<List<UserOrder>> getOrderList(@Valid @NotBlank(message = "订单号不能为空") Long customerId, String startTime, String endTime) {
+    public ApiResult<List<UserOrder>> getOrderList(@Valid @NotNull(message = "用户ID不能为空") Long customerId, String startTime, String endTime) {
         try {
             List<UserOrder> orderList = testOrderService.getOrderList(customerId,startTime,endTime);
             return Response.makeOKRsp(orderList);

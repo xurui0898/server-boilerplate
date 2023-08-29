@@ -8,6 +8,7 @@ import com.boilerplate.server.dao.UserOrderItemMapper;
 import com.boilerplate.server.dao.UserOrderMapper;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
+import com.boilerplate.server.model.UserOrderExample;
 import com.boilerplate.server.model.UserOrderItem;
 import com.boilerplate.server.sharding.RandomUtils;
 import com.boilerplate.server.sharding.ShardingUtils;
@@ -116,7 +117,20 @@ public class TestOrderService {
     }
 
     /**
-     * 获取订单列表
+     * 根据订单号批量查询订单
+     * @param orderIds
+     * @return
+     */
+    public List<UserOrder> queryOrder(List<Long> orderIds) {
+        UserOrderExample example = new UserOrderExample();
+        UserOrderExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderIdIn(orderIds);
+
+        return userOrderMapper.selectByExample(example);
+    }
+
+    /**
+     * 获取用户订单列表
      * @param customerId
      * @return
      */
@@ -128,5 +142,4 @@ public class TestOrderService {
         List<UserOrder> orderList = customQueryService.getOrderList(params);
         return orderList;
     }
-
 }
