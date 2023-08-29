@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @DS(ShardingUtils.SHARDING_DATA_SOURCE_NAME)
@@ -95,13 +97,13 @@ public class TestOrderService {
      */
     public OrderVo queryOrder(Long orderId) {
         //查询订单表
-        UserOrder order = customQueryService.getOrderByOrderId(orderId);
+        UserOrder order = customQueryService.getOrderById(orderId);
         if (order == null) {
             return null;
         }
         Long userId = order.getCustomerId();
         //订单商品
-        List<UserOrderItem> userOrderItems = customQueryService.getOrderItemsByOrderId(orderId);
+        List<UserOrderItem> userOrderItems = customQueryService.getOrderItems(orderId);
 
         //返回数据
         String subUserId = StringUtils.right(String.valueOf(userId), 5);
@@ -118,8 +120,12 @@ public class TestOrderService {
      * @param customerId
      * @return
      */
-    public List<UserOrder> getOrderList(Long customerId) {
-        List<UserOrder> orderList = customQueryService.getOrderListByCustomerId(customerId);
+    public List<UserOrder> getOrderList(Long customerId, String startTime, String endTime) {
+        Map<String, String> params = new HashMap<>();
+        params.put("customerId", String.valueOf(customerId));
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+        List<UserOrder> orderList = customQueryService.getOrderList(params);
         return orderList;
     }
 

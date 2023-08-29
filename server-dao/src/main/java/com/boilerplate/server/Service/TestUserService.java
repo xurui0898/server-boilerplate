@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TestUserService {
@@ -72,7 +74,10 @@ public class TestUserService {
      * @return
      */
     public int countUser(Short sex, Short cityId){
-        return customQueryService.countTestUser(sex, cityId);
+        Map<String, Short> params = new HashMap<>();
+        params.put("sex", sex);
+        params.put("cityId", cityId);
+        return customQueryService.countTestUser(params);
     }
 
     /**

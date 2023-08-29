@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,15 +22,11 @@ public class CustomQueryService {
 
     /**
      * 自定义SQL查询 统计用户数量
-     * @param sex
-     * @param cityId
+     * @param params
      * @return
      */
-    public int countTestUser (Short sex, Short cityId) {
-        Map<String, Short> param = new HashMap<>();
-        param.put("sex", sex);
-        param.put("cityId", cityId);
-        return sqlSessionTemplate.selectOne(CUSTOM_DAO_SPACE + "countTestUser", param);
+    public int countTestUser (Map<String, Short> params) {
+        return sqlSessionTemplate.selectOne(CUSTOM_DAO_SPACE + "countTestUser", params);
     }
 
     /**
@@ -48,17 +43,17 @@ public class CustomQueryService {
      * @param orderId
      * @return
      */
-    public UserOrder getOrderByOrderId (Long orderId) {
+    public UserOrder getOrderById(Long orderId) {
         return sqlSessionTemplate.selectOne(CUSTOM_DAO_SPACE + "getOrderByOrderId", orderId);
     }
 
     /**
      * 自定义SQL查询 根据用户ID查询订单列表
-     * @param customerId
+     * @param params
      * @return
      */
-    public List<UserOrder> getOrderListByCustomerId (Long customerId) {
-        return sqlSessionTemplate.selectList(CUSTOM_DAO_SPACE + "getOrderListByCustomerId", customerId);
+    public List<UserOrder> getOrderList(Map<String,String> params) {
+        return sqlSessionTemplate.selectList(CUSTOM_DAO_SPACE + "getOrderListByCustomerId", params);
     }
 
     /**
@@ -66,7 +61,7 @@ public class CustomQueryService {
      * @param orderId
      * @return
      */
-    public List<UserOrderItem> getOrderItemsByOrderId (Long orderId) {
+    public List<UserOrderItem> getOrderItems(Long orderId) {
         return sqlSessionTemplate.selectList(CUSTOM_DAO_SPACE + "getOrderItemsByOrderId", orderId);
     }
 }

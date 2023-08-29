@@ -1,8 +1,8 @@
 package com.boilerplate.server.controller;
 
+import com.boilerplate.server.Service.TestOrderService;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
-import com.boilerplate.server.Service.TestOrderService;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -46,9 +48,9 @@ public class ShardingController {
     }
 
     @GetMapping("getOrderList")
-    public ApiResult<List<UserOrder>> getOrderList(Long customerId) {
+    public ApiResult<List<UserOrder>> getOrderList(@Valid @NotBlank(message = "订单号不能为空") Long customerId, String startTime, String endTime) {
         try {
-            List<UserOrder> orderList = testOrderService.getOrderList(customerId);
+            List<UserOrder> orderList = testOrderService.getOrderList(customerId,startTime,endTime);
             return Response.makeOKRsp(orderList);
         } catch (Exception e) {
             log.info(e.toString());
