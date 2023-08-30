@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.boilerplate.server.dao.UserOrderItemMapper;
 import com.boilerplate.server.dao.UserOrderMapper;
 import com.boilerplate.server.entity.order.OrderVo;
@@ -23,6 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @DS(ShardingUtils.SHARDING_DATA_SOURCE_NAME)
@@ -127,6 +132,31 @@ public class TestOrderService {
         criteria.andOrderIdIn(orderIds);
 
         return userOrderMapper.selectByExample(example);
+    }
+
+    /**
+     * 根据订单号批量查询订单
+     * @param orderIds
+     * @return
+     */
+    public List<OrderVo> batchQueryOrder(List<Long> orderIds) throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(orderIds.size());
+        ExecutorService threadPool = Executors.newFixedThreadPool(orderIds.size());
+
+        List<OrderVo> orderVos = new CopyOnWriteArrayList<>();
+        orderIds.forEach(orderId->{
+            threadPool.execute(() -> {
+                //指定子线程切换数据源
+                DynamicDataSourceContextHolder.push(ShardingUtils.SHARDING_DATA_SOURCE_NAME);
+                orderVos.add(queryOrder(orderId));
+                countDownLatch.countDown();
+            });
+        });
+        countDownLatch.await();
+        //关闭线程池
+        threadPool.shutdown();
+
+        return orderVos;
     }
 
     /**

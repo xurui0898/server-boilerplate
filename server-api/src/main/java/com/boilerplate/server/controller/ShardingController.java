@@ -51,9 +51,9 @@ public class ShardingController {
     }
 
     @GetMapping("batchQueryOrder")
-    public ApiResult<List<UserOrder>> batchQueryOrder(@RequestBody List<Long> orderIds) {
+    public ApiResult<List<OrderVo>> batchQueryOrder(@RequestBody List<Long> orderIds) {
         try {
-            List<UserOrder> orderList = testOrderService.queryOrder(orderIds);
+            List<OrderVo> orderList = testOrderService.batchQueryOrder(orderIds);
             return Response.makeOKRsp(orderList);
         } catch (Exception e) {
             log.info(e.toString());
