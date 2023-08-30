@@ -1,8 +1,9 @@
-package com.boilerplate.server.entity;
+package com.boilerplate.server.init;
 
+import com.boilerplate.server.entity.ApiResult;
+import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -13,11 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-//声明为异常处理器
 @SuppressWarnings("all")
 @RestControllerAdvice
 @Slf4j
