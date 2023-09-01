@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 订单批量查询
@@ -26,8 +26,8 @@ public class BatchOrderService {
     private UserOrderMapper userOrderMapper;
     @Autowired
     private TestOrderService testOrderService;
-    @Autowired
-    private ThreadPoolTaskExecutor batchOrderPool;
+    @Resource(name = "batchOrderPool")
+    private ThreadPoolTaskExecutor orderQueryPool;
 
 
     /**
@@ -40,7 +40,7 @@ public class BatchOrderService {
 
         List<OrderVo> orderVos = new CopyOnWriteArrayList<>();
         orderIds.forEach(orderId->{
-            batchOrderPool.execute(() -> {
+            orderQueryPool.execute(() -> {
                 //指定子线程切换数据源
                 DynamicDataSourceContextHolder.push(ShardingUtils.SHARDING_DATA_SOURCE_NAME);
                 orderVos.add(testOrderService.queryOrder(orderId));

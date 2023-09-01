@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
 public class ThreadPoolConfig {
@@ -16,7 +16,7 @@ public class ThreadPoolConfig {
      * @return
      */
     @Bean(name = "batchOrderPool")
-    public ThreadPoolTaskExecutor batchOrderPool() {
+    public ThreadPoolTaskExecutor createBatchOrderPool() {
         int corePoolSize = CPU_COUNT * 2;
         int maximumPoolSize = corePoolSize * 2;
         int keepAliveTime = 60;
