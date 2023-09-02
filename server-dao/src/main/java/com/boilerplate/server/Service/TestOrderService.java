@@ -4,24 +4,30 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.boilerplate.server.dao.UserOrderItemMapper;
 import com.boilerplate.server.dao.UserOrderMapper;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
+import com.boilerplate.server.model.UserOrderExample;
 import com.boilerplate.server.model.UserOrderItem;
 import com.boilerplate.server.sharding.RandomUtils;
 import com.boilerplate.server.sharding.ShardingUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 
 @Service
 @DS(ShardingUtils.SHARDING_DATA_SOURCE_NAME)
@@ -34,6 +40,8 @@ public class TestOrderService {
     private RandomUtils randomUtils;
     @Autowired
     private CustomQueryService customQueryService;
+    @Resource(name = "batchOrderPool")
+    private ThreadPoolTaskExecutor batchQueryPool;
 
     /**
      * 创建测试订单
@@ -127,5 +135,40 @@ public class TestOrderService {
         params.put("endTime", endTime);
         List<UserOrder> orderList = customQueryService.getOrderList(params);
         return orderList;
+    }
+
+    /**
+     * 批量查询订单测试
+     * @param orderIds
+     * @return
+     */
+    public List<UserOrder> batchQueryTest(List<Long> orderIds) {
+        UserOrderExample example = new UserOrderExample();
+        UserOrderExample.Criteria criteria = example.createCriteria();
+        criteria.andOrderIdIn(orderIds);
+
+        return userOrderMapper.selectByExample(example);
+    }
+
+    /**
+     * 根据订单号批量查询订单
+     * @param orderIds
+     * @return
+     */
+    public List<OrderVo> batchQueryOrder(List<Long> orderIds) throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(orderIds.size());
+
+        List<OrderVo> orderVos = new CopyOnWriteArrayList<>();
+        orderIds.forEach(orderId->{
+            batchQueryPool.execute(() -> {
+                //指定子线程切换数据源
+                DynamicDataSourceContextHolder.push(ShardingUtils.SHARDING_DATA_SOURCE_NAME);
+                orderVos.add(queryOrder(orderId));
+                countDownLatch.countDown();
+            });
+        });
+        countDownLatch.await();
+
+        return orderVos;
     }
 }

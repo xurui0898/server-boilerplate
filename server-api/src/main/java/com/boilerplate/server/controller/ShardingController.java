@@ -1,6 +1,5 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.Service.BatchOrderService;
 import com.boilerplate.server.Service.TestOrderService;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
@@ -28,8 +27,6 @@ import java.util.List;
 public class ShardingController {
     @Autowired
     private TestOrderService testOrderService;
-    @Autowired
-    private BatchOrderService batchOrderService;
 
     @GetMapping("createOrder")
     public ApiResult<OrderVo> createOrder() {
@@ -56,7 +53,7 @@ public class ShardingController {
     @GetMapping("batchQueryOrder")
     public ApiResult<List<OrderVo>> batchQueryOrder(@RequestBody List<Long> orderIds) {
         try {
-            List<OrderVo> orderList = batchOrderService.batchQueryOrder(orderIds);
+            List<OrderVo> orderList = testOrderService.batchQueryOrder(orderIds);
             return Response.makeOKRsp(orderList);
         } catch (Exception e) {
             log.info(e.toString());
