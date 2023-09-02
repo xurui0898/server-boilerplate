@@ -1,5 +1,7 @@
 package com.boilerplate.server.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -73,6 +75,7 @@ public class UserOrder implements Serializable {
      * 表字段 : user_order.create_time
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
 
     /**
@@ -80,6 +83,7 @@ public class UserOrder implements Serializable {
      * 表字段 : user_order.update_time
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp updateTime;
 
     /**
