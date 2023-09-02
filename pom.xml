@@ -34,6 +34,8 @@
         <validation.version>2.2.1.RELEASE</validation.version>
         <sharding.jdbc.version>4.1.1</sharding.jdbc.version>
         <dynamic.datasource.version>3.3.2</dynamic.datasource.version>
+        <mybatis.plus.version>3.3.2</mybatis.plus.version>
+        <apache.velocity.version>2.1</apache.velocity.version>
     </properties>
 
     <dependencyManagement>
@@ -85,6 +87,24 @@
                 <artifactId>mybatis-generator-core</artifactId>
                 <version>${mybatis.generator.version}</version>
             </dependency>
+            <!--MyBatis Plus Start-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${apache.velocity.version}</version>
+            </dependency>
+            <!--MyBatis Plus End-->
+
             <!--druid 数据库连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
