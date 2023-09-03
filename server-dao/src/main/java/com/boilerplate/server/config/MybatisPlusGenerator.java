@@ -44,7 +44,7 @@ public class MybatisPlusGenerator {
         //设置作者
         gc.setAuthor(AUTHOR);
         //实体属性 Swagger2 注解
-        gc.setSwagger2(true);
+        gc.setSwagger2(false);
         //生成之后是否打开文件夹
         gc.setOpen(false);
         //是否覆盖
