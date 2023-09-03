@@ -2,11 +2,13 @@ package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.Service.AreaService;
+import com.boilerplate.server.dao.AreaStreetMapper;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
+import com.boilerplate.server.model.AreaStreet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,8 @@ import java.util.Optional;
 public class TestAreaController {
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private AreaStreetMapper streetMapper;
 
     @RequestMapping("areaList")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
@@ -47,7 +51,7 @@ public class TestAreaController {
     }
 
     @RequestMapping("streetList")
-    public ApiResult<ApiList<AreaVO>> streetList(Integer parentCode, Integer page, Integer pageSize) {
+    public ApiResult<ApiList<AreaStreet>> streetList(Integer parentCode, Integer page, Integer pageSize) {
         parentCode = Optional.ofNullable(parentCode).orElse(0);
         page     = Optional.ofNullable(page).orElse(1);
         pageSize = Optional.ofNullable(pageSize).orElse(10);
@@ -55,8 +59,13 @@ public class TestAreaController {
             page = 1;
         }
 
+        /*LambdaQueryWrapper<AreaStreet> query = Wrappers.lambdaQuery();
+        query.eq(AreaStreet::getParentCode, parentCode);
+        List<AreaStreet> streetList = streetMapper.selectList(query);*/
+
+        List<AreaStreet> streetList = streetMapper.getList(parentCode);
         //组装返回结构
-        ApiList<AreaVO> apiList = null;
+        ApiList<AreaStreet> apiList = new ApiList<>(false, streetList);
         return Response.makeOKRsp(apiList);
     }
 }
