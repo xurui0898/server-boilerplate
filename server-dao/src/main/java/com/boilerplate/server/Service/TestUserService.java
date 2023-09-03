@@ -85,7 +85,7 @@ public class TestUserService {
      * @param userList
      * @return
      */
-    public int insertTestUserBatch (List<TestUser> userList) {
+    public int addUserBatch(List<TestUser> userList) {
         return customQueryService.insertTestUserBatch(userList);
     }
 }

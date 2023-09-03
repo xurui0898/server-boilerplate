@@ -1,12 +1,9 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.boilerplate.server.Service.AreaService;
 import com.boilerplate.server.Service.TestUserService;
 import com.boilerplate.server.entity.*;
-import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.entity.testuser.TestUserVo;
-import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.service.ValidatorUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -23,38 +20,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * mybatis测试
+ * TestUser接口测试
+ * Mybatis框架，自定义SQL方法：addUserBatch，countUser
  */
 @RestController
 @Slf4j
-@RequestMapping("mybatis")
-public class MybatisController {
-    @Autowired
-    private AreaService areaService;
+@RequestMapping("test-user")
+public class TestUserController {
     @Autowired
     private TestUserService testUserService;
 
-    @RequestMapping("arealist")
-    public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
-        parentId = Optional.ofNullable(parentId).orElse(0);
-        page     = Optional.ofNullable(page).orElse(1);
-        pageSize = Optional.ofNullable(pageSize).orElse(10);
-        if (page < 1) {
-            page = 1;
-        }
-
-        //根据父ID获取区域列表
-        ApiList<Area> areaData = areaService.getList(parentId,page,pageSize);
-        //拷贝list，只返回AreaVO实体字段用于展示，还可用Orika进行深拷贝
-        List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
-
-        //组装返回结构
-        ApiList<AreaVO> apiList = new ApiList<>(areaData.getHasNext(), listView);
-
-        return Response.makeOKRsp(apiList);
-    }
-
-    @RequestMapping("userlist")
+    @RequestMapping("userList")
     public ApiResult<ApiList<TestUserVo>> userList(Short cityID, Integer page, Integer pageSize) {
         cityID = Optional.ofNullable(cityID).orElse((short) 0);
         page     = Optional.ofNullable(page).orElse(1);
@@ -73,7 +49,7 @@ public class MybatisController {
         return Response.makeOKRsp(apiList);
     }
 
-    @PostMapping("adduser")
+    @PostMapping("addUser")
     public ApiResult<TestUserVo> addUser(@Valid @RequestBody AddUserDTO addUserDTO) {
         try {
             //新增实体数据
@@ -90,7 +66,30 @@ public class MybatisController {
         }
     }
 
-    @PostMapping("addnewuser")
+    @PostMapping("addUserBatch")
+    public ApiResult<String> addUserBatch(@Valid @RequestBody AddUserDTO addUserDTO) {
+        try {
+            long start = System.currentTimeMillis();
+            List<TestUser> userList = new ArrayList<>();
+            for(int i = 1 ;i <= 100; i++) {
+                TestUser testUser = new TestUser();
+                testUser.setUsername(addUserDTO.getUsername()+i);
+                testUser.setSex(addUserDTO.getSex());
+                testUser.setCityId(addUserDTO.getCityId());
+                testUser.setMobile(addUserDTO.getMobile());
+                testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+                userList.add(testUser);
+            }
+            testUserService.addUserBatch(userList);
+            long end = System.currentTimeMillis();
+            String msg = "100条数据总耗时：" + (end - start) + "ms";
+            return Response.makeOKRsp(msg);
+        } catch (Exception e) {
+            return Response.makeErrRsp(e.getMessage());
+        }
+    }
+
+    @PostMapping("addNewUser")
     public ApiResult<TestUserVo> addNewUser(String username, Short sex, Short cityId, String mobile) {
         try {
             //参数实体
@@ -116,7 +115,7 @@ public class MybatisController {
         }
     }
 
-    @PostMapping("updateuser")
+    @PostMapping("updateUser")
     public ApiResult<TestUserVo> updateUser(@Valid @RequestBody UpdateUserDTO updateUserDTO) {
         try {
             //更新实体数据
@@ -133,35 +132,12 @@ public class MybatisController {
         }
     }
 
-    @PostMapping("countuser")
+    @PostMapping("countUser")
     public ApiResult<Integer> countUser(Short sex, Short cityId) {
         try {
             int total = testUserService.countUser(sex, cityId);
 
             return Response.makeOKRsp(total);
-        } catch (Exception e) {
-            return Response.makeErrRsp(e.getMessage());
-        }
-    }
-
-    @PostMapping("adduserbatch")
-    public ApiResult<String> addUserBatch(@Valid @RequestBody AddUserDTO addUserDTO) {
-        try {
-            long start = System.currentTimeMillis();
-            List<TestUser> userList = new ArrayList<>();
-            for(int i = 1 ;i <= 100; i++) {
-                TestUser testUser = new TestUser();
-                testUser.setUsername(addUserDTO.getUsername()+i);
-                testUser.setSex(addUserDTO.getSex());
-                testUser.setCityId(addUserDTO.getCityId());
-                testUser.setMobile(addUserDTO.getMobile());
-                testUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
-                userList.add(testUser);
-            }
-            testUserService.insertTestUserBatch(userList);
-            long end = System.currentTimeMillis();
-            String msg = "100条数据总耗时：" + (end - start) + "ms";
-            return Response.makeOKRsp(msg);
         } catch (Exception e) {
             return Response.makeErrRsp(e.getMessage());
         }
