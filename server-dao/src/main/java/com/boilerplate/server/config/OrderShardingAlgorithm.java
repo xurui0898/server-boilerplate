@@ -1,4 +1,4 @@
-package com.boilerplate.server.sharding;
+package com.boilerplate.server.config;
 
 import org.apache.shardingsphere.api.sharding.complex.ComplexKeysShardingAlgorithm;
 import org.apache.shardingsphere.api.sharding.complex.ComplexKeysShardingValue;

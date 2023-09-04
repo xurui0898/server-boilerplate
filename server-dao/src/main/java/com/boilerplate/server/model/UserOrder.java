@@ -75,7 +75,7 @@ public class UserOrder implements Serializable {
      * 表字段 : user_order.create_time
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
 
     /**
@@ -83,7 +83,7 @@ public class UserOrder implements Serializable {
      * 表字段 : user_order.update_time
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp updateTime;
 
     /**

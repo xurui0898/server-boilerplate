@@ -1,4 +1,4 @@
-package com.boilerplate.server.sharding;
+package com.boilerplate.server.utils;
 
 import cn.hutool.core.util.RandomUtil;
 import org.springframework.stereotype.Component;

@@ -84,7 +84,6 @@
                 <version>${apache.velocity.version}</version>
             </dependency>
             <!--MyBatis Plus End-->
-
             <!--druid 数据库连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -173,11 +172,35 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- global dependencies -->
+    <!-- 公共依赖，所有子模块可以直接使用无需单独引入 -->
     <dependencies>
+        <!-- slf4j log -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--常用工具类-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 

@@ -72,12 +72,12 @@ spring:
           databaseStrategy:
             complex:
               sharding-columns: order_id,customer_id
-              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
+              algorithm-class-name: com.boilerplate.server.config.OrderShardingAlgorithm
           # 分表策略
           tableStrategy:
             complex:
               sharding-columns: order_id,customer_id
-              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
+              algorithm-class-name: com.boilerplate.server.config.OrderShardingAlgorithm
         # 订单商品表
         user_order_item:
           # 真实表
@@ -86,11 +86,11 @@ spring:
           databaseStrategy:
             complex:
               sharding-columns: order_id,customer_id
-              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
+              algorithm-class-name: com.boilerplate.server.config.OrderShardingAlgorithm
           # 分表策略
           tableStrategy:
             complex:
               sharding-columns: order_id,customer_id
-              algorithm-class-name: com.boilerplate.server.sharding.OrderShardingAlgorithm
+              algorithm-class-name: com.boilerplate.server.config.OrderShardingAlgorithm
       bindingTables:
         - user_order,user_order_item

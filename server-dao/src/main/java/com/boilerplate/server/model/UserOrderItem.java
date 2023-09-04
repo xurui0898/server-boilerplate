@@ -61,7 +61,7 @@ public class UserOrderItem implements Serializable {
      * 表字段 : user_order_item.create_time
      * @mbggenerated
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
 
     /**
