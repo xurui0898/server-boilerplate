@@ -31,7 +31,9 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
             SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
             bean.setDataSource(dataSource);
             bean.setConfigLocation(resolver.getResource("classpath:mybatis-config.xml"));
+            //xml映射文件路径
             bean.setMapperLocations(resolver.getResources("classpath:com/boilerplate/server/dao/*.xml"));
+            //xml映射文件中像resultType会引用一些实体类，配置实体类所在的包名
             bean.setTypeAliasesPackage("com.boilerplate.server.dao");
             return bean.getObject();
         } catch (Exception e) {

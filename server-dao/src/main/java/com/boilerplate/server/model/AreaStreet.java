@@ -17,7 +17,6 @@ import lombok.EqualsAndHashCode;
  * @since 2023-09-04
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("area_street")
 public class AreaStreet implements Serializable {
 
