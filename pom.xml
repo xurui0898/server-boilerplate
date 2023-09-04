@@ -209,22 +209,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.mybatis.generator</groupId>
-                    <artifactId>mybatis-generator-maven-plugin</artifactId>
-                    <version>${mybatis.generator.version}</version>
-                    <configuration>
-                        <verbose>true</verbose>
-                        <overwrite>true</overwrite>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>server-boilerplate</groupId>
-                            <artifactId>server-common</artifactId>
-                            <version>${project.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.0</version>
