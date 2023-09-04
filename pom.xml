@@ -20,7 +20,6 @@
         <mybatis.boot.version>1.1.1</mybatis.boot.version>
         <mybatis.generator.version>1.3.2</mybatis.generator.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
-        <shiro.version>1.7.1</shiro.version>
         <druid.version>1.2.18</druid.version>
         <slf4j.version>1.7.21</slf4j.version>
         <logback.version>1.2.0</logback.version>
@@ -122,35 +121,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic.datasource.version}</version>
-            </dependency>
-
-            <!--安全管理权限验证框架 shiro-->
-            <!--同类型有Spring Security，针对微服务Spring官方推出了Spring Cloud Security 和 Spring Cloud OAuth2 -->
-            <!--同类型还有轻量级Java权限认证框架 Sa-Token-->
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-core</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-ehcache</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-web</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-quartz</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-spring</artifactId>
-                <version>${shiro.version}</version>
             </dependency>
             <!-- slf4j log -->
             <dependency>
