@@ -1,4 +1,4 @@
-package com.boilerplate.server.dao;
+package com.boilerplate.server.mapper;
 
 import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.model.TestUserExample;

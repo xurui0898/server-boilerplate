@@ -1,7 +1,7 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.boilerplate.server.Service.TestUserService;
+import com.boilerplate.server.service.TestUserService;
 import com.boilerplate.server.entity.*;
 import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.model.TestUser;

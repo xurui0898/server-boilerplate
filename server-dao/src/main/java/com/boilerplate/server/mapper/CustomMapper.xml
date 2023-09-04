@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.boilerplate.server.dao.CustomMapper">
+<mapper namespace="com.boilerplate.server.mapper.CustomMapper">
     <select id="countTestUser" parameterType="Map" resultType="java.lang.Integer">
         select count(id) as total
         from test_user
@@ -15,16 +15,16 @@
         </foreach>
     </insert>
 
-    <select id="getOrderByOrderId" parameterType="java.lang.Long" resultMap="com.boilerplate.server.dao.UserOrderMapper.BaseResultMap">
+    <select id="getOrderByOrderId" parameterType="java.lang.Long" resultMap="com.boilerplate.server.mapper.UserOrderMapper.BaseResultMap">
         select
-        <include refid="com.boilerplate.server.dao.UserOrderMapper.Base_Column_List" />
+        <include refid="com.boilerplate.server.mapper.UserOrderMapper.Base_Column_List" />
         from user_order
         where order_id = #{orderId}
     </select>
 
-    <select id="getOrderListByCustomerId" parameterType="Map" resultMap="com.boilerplate.server.dao.UserOrderMapper.BaseResultMap">
+    <select id="getOrderListByCustomerId" parameterType="Map" resultMap="com.boilerplate.server.mapper.UserOrderMapper.BaseResultMap">
         select
-        <include refid="com.boilerplate.server.dao.UserOrderMapper.Base_Column_List" />
+        <include refid="com.boilerplate.server.mapper.UserOrderMapper.Base_Column_List" />
         from user_order
         where customer_id = #{customerId}
         <if test=" startTime!=null and startTime!=''">
@@ -35,9 +35,9 @@
         </if>
     </select>
 
-    <select id="getOrderItemsByOrderId" parameterType="java.lang.Long" resultMap="com.boilerplate.server.dao.UserOrderItemMapper.BaseResultMap">
+    <select id="getOrderItemsByOrderId" parameterType="java.lang.Long" resultMap="com.boilerplate.server.mapper.UserOrderItemMapper.BaseResultMap">
         select
-        <include refid="com.boilerplate.server.dao.UserOrderItemMapper.Base_Column_List" />
+        <include refid="com.boilerplate.server.mapper.UserOrderItemMapper.Base_Column_List" />
         from user_order_item
         where order_id = #{orderId} and status = 1
     </select>

@@ -45,7 +45,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.boilerplate.server.dao" level="DEBUG">
+    <logger name="com.boilerplate.server.mapper" level="DEBUG">
         <appender-ref ref="SQL"/>
     </logger>
 

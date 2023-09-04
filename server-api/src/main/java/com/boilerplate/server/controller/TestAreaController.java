@@ -1,8 +1,10 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.boilerplate.server.Service.AreaService;
-import com.boilerplate.server.dao.AreaStreetMapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.boilerplate.server.service.AreaService;
+import com.boilerplate.server.mapper.AreaStreetMapper;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
@@ -59,11 +61,10 @@ public class TestAreaController {
             page = 1;
         }
 
-        /*LambdaQueryWrapper<AreaStreet> query = Wrappers.lambdaQuery();
-        query.eq(AreaStreet::getParentCode, parentCode);
-        List<AreaStreet> streetList = streetMapper.selectList(query);*/
+        LambdaQueryWrapper<AreaStreet> query = Wrappers.lambdaQuery();
+        query.eq(AreaStreet::getParentCode, parentCode).eq(AreaStreet::getStatus,1);
+        List<AreaStreet> streetList = streetMapper.selectList(query);
 
-        List<AreaStreet> streetList = streetMapper.getList(parentCode);
         //组装返回结构
         ApiList<AreaStreet> apiList = new ApiList<>(false, streetList);
         return Response.makeOKRsp(apiList);

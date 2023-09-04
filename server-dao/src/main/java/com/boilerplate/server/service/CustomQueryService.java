@@ -1,4 +1,4 @@
-package com.boilerplate.server.Service;
+package com.boilerplate.server.service;
 
 import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.model.UserOrder;
@@ -18,7 +18,7 @@ public class CustomQueryService {
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
 
-    private final static String CUSTOM_DAO_SPACE = "com.boilerplate.server.dao.CustomMapper.";
+    private final static String CUSTOM_DAO_SPACE = "com.boilerplate.server.mapper.CustomMapper.";
 
     /**
      * 自定义SQL查询 统计用户数量

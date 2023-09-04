@@ -1,6 +1,6 @@
-package com.boilerplate.server.Service;
+package com.boilerplate.server.service;
 
-import com.boilerplate.server.dao.TestUserMapper;
+import com.boilerplate.server.mapper.TestUserMapper;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.model.TestUserExample;

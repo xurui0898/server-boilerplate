@@ -1,6 +1,6 @@
-package com.boilerplate.server.Service;
+package com.boilerplate.server.service;
 
-import com.boilerplate.server.dao.AreaMapper;
+import com.boilerplate.server.mapper.AreaMapper;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaExample;

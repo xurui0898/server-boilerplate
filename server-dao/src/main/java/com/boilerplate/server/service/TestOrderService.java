@@ -1,12 +1,12 @@
-package com.boilerplate.server.Service;
+package com.boilerplate.server.service;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import com.boilerplate.server.dao.UserOrderItemMapper;
-import com.boilerplate.server.dao.UserOrderMapper;
+import com.boilerplate.server.mapper.UserOrderItemMapper;
+import com.boilerplate.server.mapper.UserOrderMapper;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
 import com.boilerplate.server.model.UserOrderExample;

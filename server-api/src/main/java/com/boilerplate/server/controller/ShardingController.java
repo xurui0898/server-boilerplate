@@ -1,6 +1,6 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.Service.TestOrderService;
+import com.boilerplate.server.service.TestOrderService;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.entity.order.OrderVo;
