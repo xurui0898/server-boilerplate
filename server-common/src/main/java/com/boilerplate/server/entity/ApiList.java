@@ -1,7 +1,6 @@
 package com.boilerplate.server.entity;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data
@@ -11,8 +10,10 @@ public class ApiList<T> {
     //泛型数据列表
     private List<T> list;
 
-    public ApiList(Boolean hasNext, List<T> list){
-        this.hasNext = hasNext;
-        this.list = list;
+    public static <T> ApiList<T> makeResult(Boolean hasNext, List<T> list) {
+        ApiList<T> result = new ApiList<>();
+        result.hasNext = hasNext;
+        result.list = list;
+        return result;
     }
 }

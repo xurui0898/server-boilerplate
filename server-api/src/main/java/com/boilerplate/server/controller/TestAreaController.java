@@ -42,8 +42,7 @@ public class TestAreaController {
         List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
 
         //组装返回结构
-        ApiList<AreaVO> apiList = new ApiList<>(areaData.getHasNext(), listView);
-
+        ApiList<AreaVO> apiList = ApiList.makeResult(areaData.getHasNext(), listView);
         return Response.makeOKRsp(apiList);
     }
 

@@ -48,7 +48,7 @@ public class TestUserService {
             list = list.subList(0, pageSize);
         }
 
-        return new ApiList<>(hasNext, list);
+        return ApiList.makeResult(hasNext, list);
     }
 
     /**
@@ -74,7 +74,7 @@ public class TestUserService {
             list = list.subList(0, pageSize);
         }
 
-        return new ApiList<>(hasNext, list);
+        return ApiList.makeResult(hasNext, list);
     }
 
     /**

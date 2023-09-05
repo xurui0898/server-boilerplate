@@ -1,15 +1,16 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.boilerplate.server.entity.ApiList;
+import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.testuser.AddUserDTO;
+import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.entity.testuser.UpdateUserDTO;
 import com.boilerplate.server.model.MpTestUser;
-import com.boilerplate.server.service.TestUserService;
-import com.boilerplate.server.entity.*;
-import com.boilerplate.server.entity.testuser.TestUserVo;
 import com.boilerplate.server.model.TestUser;
-import com.boilerplate.server.utils.ValidatorUtils;
+import com.boilerplate.server.service.TestUserService;
 import com.boilerplate.server.utils.Response;
+import com.boilerplate.server.utils.ValidatorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,8 +49,7 @@ public class TestUserController {
         //拷贝list，只返回AreaVO实体字段用于展示，还可用Orika进行深拷贝
         List<TestUserVo> listView = BeanUtil.copyToList(userData.getList(), TestUserVo.class);
         //组装返回结构
-        ApiList<TestUserVo> apiList = new ApiList<>(userData.getHasNext(), listView);
-
+        ApiList<TestUserVo> apiList = ApiList.makeResult(userData.getHasNext(), listView);
         return Response.makeOKRsp(apiList);
     }
 
