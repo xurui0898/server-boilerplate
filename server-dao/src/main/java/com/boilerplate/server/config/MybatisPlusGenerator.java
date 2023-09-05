@@ -18,13 +18,12 @@ import java.util.ArrayList;
 public class MybatisPlusGenerator {
     //需要自动生成的表名（表名要大写，否则生成的只有文件夹没有文件）
     public static String[] TABLES = new String[]{
-            "USER_ORDER",
-            "USER_ORDER_ITEM",
+            "AREA_STREET",
     };
     //输出目录：直接输出到正式目录可以改为 /server-dao/src/main/java
     public static String OUTPUT_DIR = "/target/generator-code";
     //设置生成包名
-    public static String PACKAGE_NAME = "com.boilerplate.generator";
+    public static String PACKAGE_NAME = "com.boilerplate.server";
     //作者
     public static String AUTHOR = "流浪";
 
@@ -58,7 +57,7 @@ public class MybatisPlusGenerator {
         //2.数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/ds_0?useUnicode=true&useSSL=false&characterEncoding=utf8&tinyInt1isBit=false");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/uyes_ptj?useUnicode=true&useSSL=false&characterEncoding=utf8&tinyInt1isBit=false");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");

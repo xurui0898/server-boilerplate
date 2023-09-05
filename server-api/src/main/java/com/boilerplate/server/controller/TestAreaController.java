@@ -1,16 +1,14 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.boilerplate.server.service.AreaService;
-import com.boilerplate.server.mapper.AreaStreetMapper;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaStreet;
+import com.boilerplate.server.service.AreaService;
+import com.boilerplate.server.service.AreaStreetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +28,7 @@ public class TestAreaController {
     @Autowired
     private AreaService areaService;
     @Autowired
-    private AreaStreetMapper streetMapper;
+    private AreaStreetService streetService;
 
     @RequestMapping("areaList")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
@@ -61,12 +59,8 @@ public class TestAreaController {
             page = 1;
         }
 
-        LambdaQueryWrapper<AreaStreet> query = Wrappers.lambdaQuery();
-        query.eq(AreaStreet::getParentCode, parentCode).eq(AreaStreet::getStatus,1);
-        List<AreaStreet> streetList = streetMapper.selectList(query);
-
         //组装返回结构
-        ApiList<AreaStreet> apiList = new ApiList<>(false, streetList);
+        ApiList<AreaStreet> apiList = streetService.getList(parentCode,page,pageSize);
         return Response.makeOKRsp(apiList);
     }
 }
