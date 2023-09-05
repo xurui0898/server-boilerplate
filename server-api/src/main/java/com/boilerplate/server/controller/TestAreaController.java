@@ -7,7 +7,6 @@ import com.boilerplate.server.entity.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaStreet;
-import com.boilerplate.server.service.AreaService;
 import com.boilerplate.server.service.AreaStreetService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,7 @@ import java.util.Optional;
 @RequestMapping("test-area")
 public class TestAreaController {
     @Autowired
-    private AreaService areaService;
-    @Autowired
-    private AreaStreetService streetService;
+    private AreaStreetService areaStreetService;
 
     @RequestMapping("areaList")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
@@ -40,7 +37,7 @@ public class TestAreaController {
         }
 
         //根据父ID获取区域列表
-        ApiList<Area> areaData = areaService.getList(parentId,page,pageSize);
+        ApiList<Area> areaData = areaStreetService.getAreaList(parentId,page,pageSize);
         //拷贝list，只返回AreaVO实体字段用于展示，还可用Orika进行深拷贝
         List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
 
@@ -53,14 +50,14 @@ public class TestAreaController {
     @RequestMapping("streetList")
     public ApiResult<ApiList<AreaStreet>> streetList(Integer parentCode, Integer page, Integer pageSize) {
         parentCode = Optional.ofNullable(parentCode).orElse(0);
-        page     = Optional.ofNullable(page).orElse(1);
-        pageSize = Optional.ofNullable(pageSize).orElse(10);
+        page       = Optional.ofNullable(page).orElse(1);
+        pageSize   = Optional.ofNullable(pageSize).orElse(10);
         if (page < 1) {
             page = 1;
         }
 
         //组装返回结构
-        ApiList<AreaStreet> apiList = streetService.getList(parentCode,page,pageSize);
+        ApiList<AreaStreet> apiList = areaStreetService.getStreetList(parentCode,page,pageSize);
         return Response.makeOKRsp(apiList);
     }
 }
