@@ -1,6 +1,6 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.redis.RedisUtils;
 import com.google.common.collect.Lists;

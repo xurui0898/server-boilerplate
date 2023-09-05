@@ -1,7 +1,7 @@
 package com.boilerplate.server.controller;
 
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.utils.Response;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;

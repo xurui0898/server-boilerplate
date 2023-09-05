@@ -1,4 +1,4 @@
-package com.boilerplate.server.entity;
+package com.boilerplate.server.entity.testuser;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

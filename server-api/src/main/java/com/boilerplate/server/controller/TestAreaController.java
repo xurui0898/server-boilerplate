@@ -3,7 +3,7 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaStreet;

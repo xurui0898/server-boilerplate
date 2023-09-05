@@ -2,7 +2,7 @@ package com.boilerplate.server.controller;
 
 import com.boilerplate.server.service.TestOrderService;
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.model.UserOrder;
 import lombok.extern.slf4j.Slf4j;

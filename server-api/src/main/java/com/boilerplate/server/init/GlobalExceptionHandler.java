@@ -1,7 +1,7 @@
 package com.boilerplate.server.init;
 
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.entity.Response;
+import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;

@@ -1,5 +1,6 @@
-package com.boilerplate.server.entity;
+package com.boilerplate.server.utils;
 
+import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.enums.ResultCode;
 
 /**
