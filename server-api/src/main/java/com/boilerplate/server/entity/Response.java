@@ -8,24 +8,16 @@ import com.boilerplate.server.enums.ResultCode;
 public class Response {
     //返回成功
     public static <T> ApiResult<T> makeOKRsp(T data) {
-        return new ApiResult<T>().setCode(ResultCode.SUCCESS).setData(data);
-    }
-
-    public static <T> ApiResult<T> makeOKRsp(T data, String message) {
-        return new ApiResult<T>().setCode(ResultCode.SUCCESS).setData(data).setMsg(message);
+        return ApiResult.makeResult(ResultCode.SUCCESS, data);
     }
 
     //返回失败
     public static <T> ApiResult<T> makeErrRsp(String message) {
-        return new ApiResult<T>().setCode(ResultCode.FAIL).setMsg(message);
+        return ApiResult.makeResult(ResultCode.FAIL, message);
     }
 
     //自定义类型
     public static <T> ApiResult<T> makeErrRsp(ResultCode resultCode, String message) {
-        return new ApiResult<T>().setCode(resultCode).setMsg(message);
-    }
-
-    public static <T> ApiResult<T> makeErrRsp(ResultCode resultCode) {
-        return new ApiResult<T>().setCode(resultCode);
+        return ApiResult.makeResult(resultCode, message);
     }
 }

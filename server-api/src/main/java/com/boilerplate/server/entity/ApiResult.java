@@ -1,46 +1,37 @@
 package com.boilerplate.server.entity;
 
 import com.boilerplate.server.enums.ResultCode;
+import lombok.Data;
 
 /**
  * API返回结果格式
  */
+@Data
 public class ApiResult<T> {
     private Integer code;//返回状态码
     private String msg;  //返回描述信息
     private T data;      //返回数据
 
-    public int getCode() {
-        return code;
+    public static <T> ApiResult<T> makeResult(ResultCode code, T data) {
+        ApiResult<T> result = new ApiResult<>();
+        result.code = code.getCode();
+        result.msg = code.getMsg();
+        result.data = data;
+        return result;
     }
 
-    public ApiResult<T> setCode(ResultCode resultCode) {
-        this.code = resultCode.getCode();
-        this.msg = resultCode.getMsg();
-        return this;
+    public static <T> ApiResult<T> makeResult(ResultCode code, String msg) {
+        ApiResult<T> result = new ApiResult<>();
+        result.code = code.getCode();
+        result.msg = msg;
+        return result;
     }
 
-    public ApiResult<T> setCode(int code) {
-        this.code = code;
-        return this;
+    public static <T> ApiResult<T> makeResult(ResultCode code, String msg, T data) {
+        ApiResult<T> result = new ApiResult<>();
+        result.code = code.getCode();
+        result.msg = msg;
+        result.data = data;
+        return result;
     }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public ApiResult<T> setMsg(String msg) {
-        this.msg = msg;
-        return this;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public ApiResult<T> setData(T data) {
-        this.data = data;
-        return this;
-    }
-
 }
