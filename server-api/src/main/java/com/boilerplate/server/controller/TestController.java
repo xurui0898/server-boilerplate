@@ -1,15 +1,13 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.service.TestService;
+import com.boilerplate.server.test.TestService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 默认controller
+ * 测试专用controller
  */
-@RestController
 @Slf4j
-public class IndexController {
+public class TestController {
 
     public static void main(String[] args) {
         //日期时间格式化与时间戳转换

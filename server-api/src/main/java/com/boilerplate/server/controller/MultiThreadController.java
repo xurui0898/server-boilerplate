@@ -2,7 +2,7 @@ package com.boilerplate.server.controller;
 
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.utils.Response;
-import com.boilerplate.server.service.ThreadService;
+import com.boilerplate.server.test.ThreadService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

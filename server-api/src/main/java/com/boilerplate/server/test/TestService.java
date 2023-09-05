@@ -1,4 +1,4 @@
-package com.boilerplate.server.service;
+package com.boilerplate.server.test;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.NumberUtil;
@@ -110,7 +110,7 @@ public class TestService {
         System.out.println("===========数学运算==============");
         double a = 0.06;
         double b = 0.01;
-        System.out.println("加法结果："+ArithService.add(a,b));
+        System.out.println("加法结果："+ ArithService.add(a,b));
         System.out.println("减法结果："+ArithService.sub(a,b));
         System.out.println("乘法结果："+ArithService.mul(a,b));
         System.out.println("除法结果："+ArithService.div(a,b,2));

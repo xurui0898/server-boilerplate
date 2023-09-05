@@ -1,11 +1,10 @@
 package com.boilerplate.server.aspect;
 
-import com.boilerplate.server.service.CommonService;
+import com.boilerplate.server.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Service;
 @Aspect
 @Service
 public class ApiAspect {
-    @Autowired
-    private CommonService commonService;
 
     /**
      * 针对Service接口添加环绕切面处理
@@ -26,7 +23,7 @@ public class ApiAspect {
         long beginTime = System.currentTimeMillis();
         Object result = joinPoint.proceed(joinPoint.getArgs());
         long execTime = System.currentTimeMillis() - beginTime;
-        commonService.writeSystemLog(joinPoint, execTime, result);
+        CommonUtils.writeSystemLog(joinPoint, execTime, result);
 
         return result;
     }

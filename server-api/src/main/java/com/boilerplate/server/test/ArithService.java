@@ -1,4 +1,4 @@
-package com.boilerplate.server.service;
+package com.boilerplate.server.test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
