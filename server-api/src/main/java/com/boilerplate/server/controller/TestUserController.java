@@ -1,6 +1,7 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.boilerplate.server.model.MpTestUser;
 import com.boilerplate.server.service.TestUserService;
 import com.boilerplate.server.entity.*;
 import com.boilerplate.server.entity.testuser.TestUserVo;
@@ -47,6 +48,20 @@ public class TestUserController {
         ApiList<TestUserVo> apiList = new ApiList<>(userData.getHasNext(), listView);
 
         return Response.makeOKRsp(apiList);
+    }
+
+    @RequestMapping("mpUserList")
+    public ApiResult<ApiList<MpTestUser>> mpUserList(Short cityID, Integer page, Integer pageSize) {
+        cityID = Optional.ofNullable(cityID).orElse((short) 0);
+        page     = Optional.ofNullable(page).orElse(1);
+        pageSize = Optional.ofNullable(pageSize).orElse(10);
+        if (page < 1) {
+            page = 1;
+        }
+
+        //根据城市ID查询用户，Mybatis-Plus框架
+        ApiList<MpTestUser> userData = testUserService.getMpListByCity(cityID,page,pageSize);
+        return Response.makeOKRsp(userData);
     }
 
     @PostMapping("addUser")

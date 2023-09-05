@@ -1,9 +1,14 @@
 package com.boilerplate.server.service;
 
-import com.boilerplate.server.mapper.TestUserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.boilerplate.server.entity.ApiList;
+import com.boilerplate.server.mapper.MpTestUserMapper;
+import com.boilerplate.server.mapper.TestUserMapper;
+import com.boilerplate.server.model.MpTestUser;
 import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.model.TestUserExample;
+import com.boilerplate.server.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,8 @@ public class TestUserService {
     private TestUserMapper testUserMapper;
     @Autowired
     private CustomQueryService customQueryService;
+    @Autowired
+    private MpTestUserMapper mpTestUserMapper;
 
     /**
      * 根据城市ID查询用户列表 分页查询
@@ -34,6 +41,32 @@ public class TestUserService {
         testUserExample.setLimitStart((page-1)*pageSize);
         testUserExample.setLimitEnd(pageSize+1);
         List<TestUser> list = testUserMapper.selectByExample(testUserExample);
+
+        //是否存在下一页
+        boolean hasNext = list.size() > pageSize;
+        if (hasNext) {
+            list = list.subList(0, pageSize);
+        }
+
+        return new ApiList<>(hasNext, list);
+    }
+
+    /**
+     * 根据城市ID查询用户列表 分页查询
+     * Mybatis-Plus框架
+     * @return
+     */
+    public ApiList<MpTestUser> getMpListByCity(Short cityId, Integer page, Integer pageSize){
+        LambdaQueryWrapper<MpTestUser> query = Wrappers.lambdaQuery();
+        query.select(MpTestUser::getId,
+                        MpTestUser::getUsername,
+                        MpTestUser::getSex,
+                        MpTestUser::getMobile,
+                        MpTestUser::getCreateTime)
+                .eq(MpTestUser::getCityId, cityId)
+                .last(CommonUtils.getLimitSql(page, pageSize, true))
+                .orderByAsc(MpTestUser::getId);
+        List<MpTestUser> list = mpTestUserMapper.selectList(query);
 
         //是否存在下一页
         boolean hasNext = list.size() > pageSize;
