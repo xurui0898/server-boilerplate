@@ -5,6 +5,15 @@ server:
 logging:
   path: /tmp/logs
 
+dubbo:
+  application:
+    name: server-test-consumer
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
+
 mybatis-plus:
   #配置MyBatis的xml配置文件路径
   mapper-locations: classpath:com/boilerplate/server/mapper/*.xml
