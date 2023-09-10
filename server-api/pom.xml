@@ -68,6 +68,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--Dubbo learning-->
+        <dependency>
+            <groupId>com.dubbo</groupId>
+            <artifactId>learning-interface</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
