@@ -73,7 +73,7 @@ public class TestUserController {
 
     @RequestMapping("dubboUserInfo")
     public ApiResult<String> dubboUserInfo(Long userId) {
-        //根据城市ID查询用户，Mybatis-Plus框架
+        //通过Dubbo调用服务
         String userData = learningUserService.getUserInfo(userId);
         return Response.makeOKRsp(userData);
     }
