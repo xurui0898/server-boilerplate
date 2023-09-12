@@ -1,7 +1,6 @@
 package com.boilerplate.server.entity.area;
 
 import lombok.Data;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
 @Data
 public class AreaVO {
@@ -10,14 +9,14 @@ public class AreaVO {
      * 表字段 : area.id
      * @mbggenerated
      */
-    private Integer id;
+    private Integer areaId;
 
     /**
      * 名称
      * 表字段 : area.name
      * @mbggenerated
      */
-    private String name;
+    private String areaName;
 
     /**
      * 父级ID
@@ -45,13 +44,5 @@ public class AreaVO {
      * 表字段 : area.created_at
      * @mbggenerated
      */
-    private Integer createdAt;
-    //返回格式化日期时间
-    public String getCreatedAt() {
-        if (createdAt == null) {
-            return null;
-        }
-        String format = "yyyy-MM-dd HH:mm:ss";
-        return DateFormatUtils.format(createdAt * 1000L, format);
-    }
+    private String createTime;
 }

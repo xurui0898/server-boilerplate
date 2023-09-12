@@ -3,6 +3,7 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
+import com.boilerplate.server.test.ConvertMapper;
 import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
@@ -26,6 +27,8 @@ import java.util.Optional;
 public class TestAreaController {
     @Autowired
     private AreaStreetService areaStreetService;
+    @Autowired
+    private ConvertMapper convertMapper;
 
     @RequestMapping("areaList")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
@@ -39,7 +42,8 @@ public class TestAreaController {
         //根据父ID获取区域列表
         ApiList<Area> areaData = areaStreetService.getAreaList(parentId,page,pageSize);
         //拷贝list，只返回AreaVO实体字段用于展示，还可用Orika进行深拷贝
-        List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
+        //List<AreaVO> listView = BeanUtil.copyToList(areaData.getList(), AreaVO.class);
+        List<AreaVO> listView = convertMapper.area2AreaVO(areaData.getList());
 
         //组装返回结构
         ApiList<AreaVO> apiList = ApiList.makeResult(areaData.getHasNext(), listView);

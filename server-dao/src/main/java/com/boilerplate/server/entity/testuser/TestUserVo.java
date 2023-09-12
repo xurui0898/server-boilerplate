@@ -1,5 +1,6 @@
 package com.boilerplate.server.entity.testuser;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -53,14 +54,7 @@ public class TestUserVo {
      * 表字段 : test_user.create_time
      * @mbggenerated
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createTime;
-    //返回格式化日期时间
-    public String getCreateTime() {
-        if (createTime == null) {
-            return null;
-        }
-        String format = "yyyy-MM-dd HH:mm:ss";
-        return DateFormatUtils.format(createTime, format);
-    }
 
 }
