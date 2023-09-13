@@ -1,6 +1,5 @@
 package com.boilerplate.server.test;
 
-
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -11,6 +10,9 @@ import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
+/**
+ * MapStruct 实体属性映射工具
+ */
 @Mapper(componentModel = "spring")
 public abstract class ConvertMapper {
     //Area->AreaVO 集合批量转换
