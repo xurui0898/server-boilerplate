@@ -16,7 +16,7 @@ public class DesUtils {
      * @param info
      * @return
      */
-    public static String encrypt(String info, String secretKey) {
+    public static String encrypt(String info) {
         byte[] key = Base64.decode(secretKey);
         DES des = SecureUtil.des(key);
         return des.encryptHex(info);
@@ -27,7 +27,7 @@ public class DesUtils {
      * @param encrypt
      * @return
      */
-    public static String decode(String encrypt, String secretKey) {
+    public static String decrypt(String encrypt) {
         byte[] key = Base64.decode(secretKey);
         DES des = SecureUtil.des(key);
         return des.decryptStr(encrypt);
@@ -45,16 +45,15 @@ public class DesUtils {
     public static void main(String[] args) {
         String secretKey = genSecretKey();
         System.out.println(secretKey);
-        secretKey = DesUtils.secretKey;
 
         //加密
-        String str = DesUtils.encrypt("20230916", secretKey);
+        String str = DesUtils.encrypt("20230916");
         System.out.println(str);
-        String str2 = DesUtils.encrypt("20230917", secretKey);
+        String str2 = DesUtils.encrypt("20230917");
         System.out.println(str2);
 
         // 解密
-        String decode = DesUtils.decode(str, secretKey);
+        String decode = DesUtils.decrypt(str);
         System.out.println(decode);
     }
 }
