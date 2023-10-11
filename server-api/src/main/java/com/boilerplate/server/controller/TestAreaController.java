@@ -1,6 +1,7 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.boilerplate.server.aspect.ParamsCheck;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.test.ConvertMapper;
@@ -31,6 +32,7 @@ public class TestAreaController {
     private ConvertMapper convertMapper;
 
     @RequestMapping("areaList")
+    @ParamsCheck(paramsName = "parentId")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
         parentId = Optional.ofNullable(parentId).orElse(0);
         page     = Optional.ofNullable(page).orElse(1);
