@@ -1,15 +1,14 @@
 package com.boilerplate.server.controller;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.boilerplate.server.aspect.ParamsCheck;
+import com.boilerplate.server.annotation.DuplicateCheck;
 import com.boilerplate.server.entity.ApiList;
 import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.test.ConvertMapper;
-import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.entity.area.AreaVO;
 import com.boilerplate.server.model.Area;
 import com.boilerplate.server.model.AreaStreet;
 import com.boilerplate.server.service.AreaStreetService;
+import com.boilerplate.server.test.ConvertMapper;
+import com.boilerplate.server.utils.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +31,7 @@ public class TestAreaController {
     private ConvertMapper convertMapper;
 
     @RequestMapping("areaList")
-    @ParamsCheck(paramsName = "parentId")
+    @DuplicateCheck(reqId = "2023101300218896")
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
         parentId = Optional.ofNullable(parentId).orElse(0);
         page     = Optional.ofNullable(page).orElse(1);

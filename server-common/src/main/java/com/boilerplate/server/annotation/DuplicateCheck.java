@@ -1,4 +1,4 @@
-package com.boilerplate.server.aspect;
+package com.boilerplate.server.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ParamsCheck {
-    String paramsName() default "";
+public @interface DuplicateCheck {
+    String reqId() default "";
 }

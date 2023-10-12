@@ -1,6 +1,7 @@
 package com.boilerplate.server.init;
 
 import com.boilerplate.server.entity.ApiResult;
+import com.boilerplate.server.exception.DuplicateException;
 import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,10 @@ public class GlobalExceptionHandler {
         if (validMsg != null) {
             log.info("参数校验异常="+validMsg);
             return Response.makeErrRsp(ResultCode.VALID, validMsg);
-        }else {
+        } else if (exception instanceof DuplicateException) {
+            log.info("重复请求异常="+exception.getMessage());
+            return Response.makeErrRsp(ResultCode.DUPLICATE, exception.getMessage());
+        } else {
             //未处理类型，返回系统异常
             log.error("系统异常="+exception.toString());
             return Response.makeErrRsp(ResultCode.EXCEPTION, exception.getMessage());

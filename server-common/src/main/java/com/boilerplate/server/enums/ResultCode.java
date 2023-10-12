@@ -14,6 +14,8 @@ public enum ResultCode {
     VALID(202, "参数错误"),
     //网络异常
     EXCEPTION(203,"系统异常"),
+    //重复请求
+    DUPLICATE(204,"重复请求"),
     //未认证
     UNAUTHORIZED(401,"签名错误");
 
