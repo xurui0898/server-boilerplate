@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration>
 <configuration scan="true" scanPeriod="30 seconds">
-    <springProperty name="LOG_PATH" source="logging.path"/>
+    <springProperty scope="context" name="LOG_PATH" source="logging.path"/>
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -15,7 +15,7 @@
         <!--滚动日志 基于时间和文件大小-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 滚动日志文件保存格式 -->
-            <FileNamePattern>${LOG_PATH}/mybatis.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/mybatis-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxFileSize>200MB</MaxFileSize>
             <totalSizeCap>5GB</totalSizeCap>
             <MaxHistory>7</MaxHistory>
@@ -32,7 +32,7 @@
         <!--滚动日志 基于时间和文件大小-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- 滚动日志文件保存格式 -->
-            <FileNamePattern>${LOG_PATH}/application.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxFileSize>200MB</MaxFileSize>
             <totalSizeCap>5GB</totalSizeCap>
             <MaxHistory>7</MaxHistory>
