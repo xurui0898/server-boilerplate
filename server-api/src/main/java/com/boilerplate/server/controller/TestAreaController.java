@@ -31,7 +31,7 @@ public class TestAreaController {
     private ConvertMapper convertMapper;
 
     @RequestMapping("areaList")
-    @DuplicateCheck(reqId = "2023101300218896")
+    @DuplicateCheck(key = "page",expireTime = 10)
     public ApiResult<ApiList<AreaVO>> areaList(Integer parentId, Integer page, Integer pageSize) {
         parentId = Optional.ofNullable(parentId).orElse(0);
         page     = Optional.ofNullable(page).orElse(1);

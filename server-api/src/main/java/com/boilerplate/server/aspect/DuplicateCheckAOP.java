@@ -8,13 +8,18 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Aspect
 @Component
 @Slf4j
 public class DuplicateCheckAOP {
+
     @Pointcut("@annotation(com.boilerplate.server.annotation.DuplicateCheck)")
     public void DuplicateCheck(){}
 
@@ -23,12 +28,34 @@ public class DuplicateCheckAOP {
         //根据MethodSignature获取注解对象
         MethodSignature signature= (MethodSignature) joinPoint.getSignature();
         DuplicateCheck check = signature.getMethod().getAnnotation(DuplicateCheck.class);
-        Object[] args = joinPoint.getArgs();
         //获取注解的值
-        String reqId = check.reqId();
-        log.info("DuplicateCheck 切点执行, reqId={}, 参数={}",reqId,JSONUtil.toJsonStr(args));
-        if (args[1] != null && Integer.parseInt(args[1].toString()) > 1) {
-            throw new DuplicateException("请求处理中，请勿重复提交");
+        String key = check.key();
+        long expireTime = check.expireTime();
+        //获取方法入参Map
+        Map<String, Object> paramMap = getParamMap(joinPoint);
+        log.info("DuplicateCheck 注解切点执行, key={},expireTime={},参数={}",key,expireTime,JSONUtil.toJsonStr(paramMap));
+
+        if (paramMap.get(key) != null) {
+            String lockName = paramMap.get(key).toString();
+            if (Integer.parseInt(lockName) > 1) {
+                throw new DuplicateException("请求处理中，请勿重复提交!");
+            }
         }
+    }
+
+    /**
+     * 获取方法入参Map
+     * @param joinPoint
+     * @return
+     */
+    private Map<String, Object> getParamMap(JoinPoint joinPoint) {
+        String[] paramNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
+        Object[] paramValues = joinPoint.getArgs();
+
+        Map<String, Object> paramMap = new HashMap<>();
+        for (int i = 0; i < paramNames.length; i++) {
+            paramMap.put(paramNames[i], paramValues[i]);
+        }
+        return paramMap;
     }
 }

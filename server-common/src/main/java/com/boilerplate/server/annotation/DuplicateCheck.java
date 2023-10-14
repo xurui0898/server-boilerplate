@@ -8,5 +8,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DuplicateCheck {
-    String reqId() default "";
+    /**
+     * 参数名称，作为校验key
+     */
+    String key();
+
+    /**
+     * 过期时间，单位秒，默认60秒
+     */
+    long expireTime() default 60;
 }
