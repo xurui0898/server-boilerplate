@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.order.OrderVo;
+import com.boilerplate.server.enums.ResultCode;
 import com.boilerplate.server.redis.RedisUtils;
 import com.boilerplate.server.service.TestOrderService;
 import com.boilerplate.server.utils.Response;
@@ -34,15 +35,21 @@ public class RedisController {
 
     @GetMapping("redis/addOrderData")
     public ApiResult<Boolean> addOrderData(@Valid @NotNull(message = "订单号不能为空")Long orderId) {
-        OrderVo orderVo = testOrderService.queryOrder(orderId);
+        try {
+            OrderVo orderVo = testOrderService.queryOrder(orderId);
+            if (orderVo == null) {
+                throw new Exception("订单号不存在，请核实");
+            }
+            Map<String, Object> map = BeanUtil.beanToMap(orderVo);
+            String key = String.format("%s%s", ORDER_DATA_PREFIX_KEY, orderId);
+            Boolean result = redisUtils.hmset(key, map, 86400);
 
-        Map<String, Object> map = BeanUtil.beanToMap(orderVo);
-        String key = String.format("%s%s", ORDER_DATA_PREFIX_KEY, orderId);
-        Boolean result = redisUtils.hmset(key, map, 86400);
-
-        //返回结果集封装
-        ApiResult<Boolean> apiResult = Response.makeOKRsp(result);
-        return apiResult;
+            //返回结果集封装
+            ApiResult<Boolean> apiResult = Response.makeOKRsp(result);
+            return apiResult;
+        } catch (Exception e) {
+            return Response.makeErrRsp(ResultCode.VALID, e.getMessage());
+        }
     }
 
     @RequestMapping("redis/queryOrderData")
