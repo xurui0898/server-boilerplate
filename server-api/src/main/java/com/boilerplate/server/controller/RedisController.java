@@ -11,6 +11,8 @@ import com.boilerplate.server.redis.RedisUtils;
 import com.boilerplate.server.service.TestOrderService;
 import com.boilerplate.server.utils.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,24 +36,38 @@ public class RedisController {
     private RedisUtils redisUtils;
     @Autowired
     private TestOrderService testOrderService;
+    @Autowired
+    private RedissonClient redissonClient;
 
     @GetMapping("redis/addOrderData")
-    @DuplicateCheck(key = "orderId",expireTime = 10)
+    @DuplicateCheck(key = "orderId2",expireTime = 10)
     public ApiResult<Boolean> addOrderData(@Valid @NotNull(message = "订单号不能为空")Long orderId) {
+        //分布式锁
+        String lockName = String.format("lock:addOrderData:%s", orderId);
+        RLock lock = redissonClient.getLock(lockName);
         try {
+            if (!lock.tryLock()) {
+                throw new Exception("处理中，请勿重复提交");
+            }
+
+            //查询订单
             OrderVo orderVo = testOrderService.queryOrder(orderId);
             if (orderVo == null) {
                 throw new Exception("订单号不存在，请核实");
             }
+
             Map<String, Object> map = BeanUtil.beanToMap(orderVo);
             String key = String.format("%s%s", ORDER_DATA_PREFIX_KEY, orderId);
             Boolean result = redisUtils.hmset(key, map, 86400);
 
             //返回结果集封装
-            ApiResult<Boolean> apiResult = Response.makeOKRsp(result);
-            return apiResult;
+            return Response.makeOKRsp(result);
         } catch (Exception e) {
             return Response.makeErrRsp(ResultCodeEnum.VALID, e.getMessage());
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 

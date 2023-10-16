@@ -37,7 +37,7 @@ public class DuplicateCheckAOP {
 
         if (paramMap.get(key) != null) {
             String methodName = signature.getName();
-            String lockName = String.format("lock:%s:%s", methodName, paramMap.get(key).toString());
+            String lockName = String.format("DuplicateLock:%s:%s", methodName, paramMap.get(key).toString());
             if (lockName != null) {
                 log.info("lockName={}",lockName);
                 throw new DuplicateException("请求处理中，请勿重复提交!");
