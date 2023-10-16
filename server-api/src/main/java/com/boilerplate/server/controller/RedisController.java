@@ -3,6 +3,7 @@ package com.boilerplate.server.controller;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
+import com.boilerplate.server.annotation.DuplicateCheck;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.order.OrderVo;
 import com.boilerplate.server.enums.ResultCodeEnum;
@@ -35,6 +36,7 @@ public class RedisController {
     private TestOrderService testOrderService;
 
     @GetMapping("redis/addOrderData")
+    @DuplicateCheck(key = "orderId",expireTime = 10)
     public ApiResult<Boolean> addOrderData(@Valid @NotNull(message = "订单号不能为空")Long orderId) {
         try {
             OrderVo orderVo = testOrderService.queryOrder(orderId);
