@@ -4,7 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.order.OrderVo;
-import com.boilerplate.server.enums.ResultCode;
+import com.boilerplate.server.enums.ResultCodeEnum;
 import com.boilerplate.server.redis.RedisUtils;
 import com.boilerplate.server.service.TestOrderService;
 import com.boilerplate.server.utils.Response;
@@ -48,7 +48,7 @@ public class RedisController {
             ApiResult<Boolean> apiResult = Response.makeOKRsp(result);
             return apiResult;
         } catch (Exception e) {
-            return Response.makeErrRsp(ResultCode.VALID, e.getMessage());
+            return Response.makeErrRsp(ResultCodeEnum.VALID, e.getMessage());
         }
     }
 

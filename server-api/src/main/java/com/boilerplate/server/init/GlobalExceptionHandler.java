@@ -3,7 +3,7 @@ package com.boilerplate.server.init;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.exception.DuplicateException;
 import com.boilerplate.server.utils.Response;
-import com.boilerplate.server.enums.ResultCode;
+import com.boilerplate.server.enums.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
             for (FieldError fieldError : fieldErrors) {
                 stringBuilder.append(stringBuilder.length()>0?",":"").append(fieldError.getDefaultMessage());
             }
-            validMsg = String.format("%s:%s", ResultCode.VALID.getMsg(), stringBuilder);
+            validMsg = String.format("%s:%s", ResultCodeEnum.VALID.getMessage(), stringBuilder);
         }else if (exception instanceof MethodArgumentNotValidException){
             BindingResult result = ((MethodArgumentNotValidException) exception).getBindingResult();
             if (result.hasErrors()){
@@ -45,26 +45,26 @@ public class GlobalExceptionHandler {
                     FieldError fieldError = (FieldError) error;
                     stringBuilder.append(stringBuilder.length()>0?",":"").append(fieldError.getDefaultMessage());
                 });
-                validMsg = String.format("%s:%s", ResultCode.VALID.getMsg(), stringBuilder);
+                validMsg = String.format("%s:%s", ResultCodeEnum.VALID.getMessage(), stringBuilder);
             }
         } else if (exception instanceof ConstraintViolationException){
             Set<ConstraintViolation<?>> items = ((ConstraintViolationException) exception).getConstraintViolations();
             StringBuilder stringBuilder = new StringBuilder();
             items.forEach( item -> stringBuilder.append(stringBuilder.length()>0?",":"").append(item.getMessage()));
-            validMsg = String.format("%s:%s", ResultCode.VALID.getMsg(), stringBuilder);
+            validMsg = String.format("%s:%s", ResultCodeEnum.VALID.getMessage(), stringBuilder);
         }
 
         //返回结果
         if (validMsg != null) {
             log.info("参数校验异常="+validMsg);
-            return Response.makeErrRsp(ResultCode.VALID, validMsg);
+            return Response.makeErrRsp(ResultCodeEnum.VALID, validMsg);
         } else if (exception instanceof DuplicateException) {
             log.info("重复请求异常="+exception.getMessage());
-            return Response.makeErrRsp(ResultCode.DUPLICATE, exception.getMessage());
+            return Response.makeErrRsp(ResultCodeEnum.DUPLICATE, exception.getMessage());
         } else {
             //未处理类型，返回系统异常
             log.error("系统异常="+exception.toString());
-            return Response.makeErrRsp(ResultCode.EXCEPTION, exception.getMessage());
+            return Response.makeErrRsp(ResultCodeEnum.EXCEPTION, exception.getMessage());
         }
     }
 }

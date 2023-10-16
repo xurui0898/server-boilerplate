@@ -1,6 +1,6 @@
 package com.boilerplate.server.entity;
 
-import com.boilerplate.server.enums.ResultCode;
+import com.boilerplate.server.enums.ResultCodeEnum;
 import lombok.Data;
 
 /**
@@ -12,22 +12,22 @@ public class ApiResult<T> {
     private String msg;  //返回描述信息
     private T data;      //返回数据
 
-    public static <T> ApiResult<T> makeResult(ResultCode code, T data) {
+    public static <T> ApiResult<T> makeResult(ResultCodeEnum code, T data) {
         ApiResult<T> result = new ApiResult<>();
         result.code = code.getCode();
-        result.msg = code.getMsg();
+        result.msg = code.getMessage();
         result.data = data;
         return result;
     }
 
-    public static <T> ApiResult<T> makeResult(ResultCode code, String msg) {
+    public static <T> ApiResult<T> makeResult(ResultCodeEnum code, String msg) {
         ApiResult<T> result = new ApiResult<>();
         result.code = code.getCode();
         result.msg = msg;
         return result;
     }
 
-    public static <T> ApiResult<T> makeResult(ResultCode code, String msg, T data) {
+    public static <T> ApiResult<T> makeResult(ResultCodeEnum code, String msg, T data) {
         ApiResult<T> result = new ApiResult<>();
         result.code = code.getCode();
         result.msg = msg;

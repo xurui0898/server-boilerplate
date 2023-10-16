@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * 响应枚举状态码
  */
-public enum ResultCode {
+public enum ResultCodeEnum {
     //成功
     SUCCESS(200,"成功"),
     //失败
@@ -20,12 +20,21 @@ public enum ResultCode {
     UNAUTHORIZED(401,"签名错误");
 
     @Getter
-    private final int code;
+    private final Integer code;
     @Getter
-    private final String msg;
+    private final String message;
 
-    ResultCode(Integer code, String msg) {
+    ResultCodeEnum(Integer code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
+    }
+
+    public static String getMessageByCode(Integer code) {
+        for (ResultCodeEnum codeEnum : values()) {
+            if (codeEnum.getCode().equals(code)) {
+                return codeEnum.getMessage();
+            }
+        }
+        return null;
     }
 }
