@@ -33,11 +33,13 @@ public class DuplicateCheckAOP {
         long expireTime = check.expireTime();
         //获取方法入参Map
         Map<String, Object> paramMap = getParamMap(joinPoint);
-        log.info("DuplicateCheck 注解切点执行, key={},expireTime={},参数={}",key,expireTime,JSONUtil.toJsonStr(paramMap));
+        log.info("DuplicateCheck注解执行, key={},expireTime={},参数={}",key,expireTime,JSONUtil.toJsonStr(paramMap));
 
         if (paramMap.get(key) != null) {
-            String lockName = paramMap.get(key).toString();
-            if (Integer.parseInt(lockName) > 1) {
+            String methodName = signature.getName();
+            String lockName = String.format("lock:%s:%s", methodName, paramMap.get(key).toString());
+            if (lockName != null) {
+                log.info("lockName={}",lockName);
                 throw new DuplicateException("请求处理中，请勿重复提交!");
             }
         }
