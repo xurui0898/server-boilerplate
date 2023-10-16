@@ -20,6 +20,11 @@ mybatis-plus:
   #配置XML映射文件中指定的实体类别名路径
   type-aliases-package: com.boilerplate.server.model
 
+management:
+  health:
+    db:
+      enabled: false
+
 spring:
   redis:
     redisson:
