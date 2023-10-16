@@ -1,6 +1,7 @@
 package com.boilerplate.server.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
 import com.boilerplate.server.entity.ApiResult;
 import com.boilerplate.server.entity.order.OrderVo;
@@ -54,12 +55,19 @@ public class RedisController {
 
     @RequestMapping("redis/queryOrderData")
     public ApiResult<OrderVo> queryOrderData(@Valid @NotNull(message = "订单号不能为空")Long orderId) {
-        String key = String.format("%s%s", ORDER_DATA_PREFIX_KEY, orderId);
-        String OrderStr = JSONUtil.toJsonStr(redisUtils.hmget(key));
-        OrderVo orderVo = JSONUtil.toBean(OrderStr, OrderVo.class);
+        try {
+            String key = String.format("%s%s", ORDER_DATA_PREFIX_KEY, orderId);
+            Map<Object, Object> map = redisUtils.hmget(key);
+            if (MapUtil.isEmpty(map)) {
+                throw new Exception("未找到该订单数据，请核实");
+            }
+            String OrderStr = JSONUtil.toJsonStr(map);
+            OrderVo orderVo = JSONUtil.toBean(OrderStr, OrderVo.class);
 
-        //返回结果集封装
-        ApiResult<OrderVo> apiResult = Response.makeOKRsp(orderVo);
-        return apiResult;
+            //返回结果集封装
+            return Response.makeOKRsp(orderVo);
+        } catch (Exception e) {
+            return Response.makeErrRsp(ResultCodeEnum.VALID, e.getMessage());
+        }
     }
 }
