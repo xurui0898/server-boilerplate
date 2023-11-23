@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * 无返回值多线程-实现Runnable接口方式
  */
 @Slf4j
-public class RunnableThread implements Runnable {
+public class RunnableTest implements Runnable {
     private int ticket = 50;
 
     @Override

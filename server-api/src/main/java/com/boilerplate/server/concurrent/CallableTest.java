@@ -10,10 +10,10 @@ import java.util.concurrent.Callable;
  * 有返回值多线程-实现Callable接口方式
  */
 @Slf4j
-public class CallableThread implements Callable<List<Integer>> {
+public class CallableTest implements Callable<List<Integer>> {
     private final List<Integer> goodsIdList;
 
-    public CallableThread(List<Integer> goodsIdList) {
+    public CallableTest(List<Integer> goodsIdList) {
         this.goodsIdList = goodsIdList;
     }
 

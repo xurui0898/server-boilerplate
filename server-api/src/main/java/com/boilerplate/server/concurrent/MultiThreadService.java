@@ -1,7 +1,5 @@
 package com.boilerplate.server.concurrent;
 
-import com.boilerplate.server.concurrent.CallableThread;
-import com.boilerplate.server.concurrent.RunnableThread;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,11 +13,11 @@ import java.util.concurrent.*;
  */
 @Service
 @Slf4j
-public class ThreadService {
+public class MultiThreadService {
     /**
      * 无返回值的多线程测试
      */
-    public void runnableThread() {
+    public void runnableTest() {
         long currentTimeMillis = System.currentTimeMillis();
 
         //构建一个线程池
@@ -31,9 +29,9 @@ public class ThreadService {
                 new LinkedBlockingQueue<>()
         );
 
-        RunnableThread runnableThread = new RunnableThread();
+        RunnableTest runnableTest = new RunnableTest();
         for (int i = 1; i <= 10; i++) {
-            threadPool.execute(runnableThread);
+            threadPool.execute(runnableTest);
         }
 
         //关闭线程池，等待任务执行完成
@@ -48,9 +46,9 @@ public class ThreadService {
     }
 
     /**
-     * 有返回值的多线程测试
+     * 有返回值的多线程测试（使用Future获取返回值）
      */
-    public List<Integer> callableThread() {
+    public List<Integer> callableTest() {
         long currentTimeMillis = System.currentTimeMillis();
         List<Integer> data = new ArrayList<>();
 
@@ -68,8 +66,8 @@ public class ThreadService {
         List<Future<List<Integer>>> tasks = new ArrayList<>();
         List<List<Integer>> goodsIdLists = Lists.partition(goodsIdList, 2);
         for (List<Integer> idList : goodsIdLists) {
-            CallableThread callableThread = new CallableThread(idList);
-            tasks.add(threadPool.submit(callableThread));
+            CallableTest callableTest = new CallableTest(idList);
+            tasks.add(threadPool.submit(callableTest));
         }
 
         //关闭线程池，等待任务执行完成
