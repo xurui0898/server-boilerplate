@@ -25,7 +25,7 @@ public class CallableTest implements Callable<List<Integer>> {
             Thread.sleep(200);
 
             data.add(goodsId);
-            log.info("处理完成，goodsId={}",goodsId);
+            log.info("Callable 运行，goodsId={}",goodsId);
         }
         return data;
     }

@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class RunnableTest implements Runnable {
-    private int ticket = 50;
+    private int ticket = 15;
 
     @Override
     public void run() {
@@ -15,7 +15,7 @@ public class RunnableTest implements Runnable {
         for (int i = 0; i < total; i++) {
             synchronized (this){
                 if (ticket>0) {
-                    log.info("RunnableThread 线程[{}]运行，num={}",Thread.currentThread().getName(),ticket);
+                    log.info("Runnable 运行，num={}",ticket);
                     ticket--;
                 }
             }
