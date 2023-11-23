@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * TestArea接口测试
+ * Area接口测试
  * Mybatis-Plus框架
  */
 @RestController
 @Slf4j
-@RequestMapping("test-area")
-public class TestAreaController {
+@RequestMapping("area")
+public class AreaController {
     @Autowired
     private AreaStreetService areaStreetService;
     @Autowired

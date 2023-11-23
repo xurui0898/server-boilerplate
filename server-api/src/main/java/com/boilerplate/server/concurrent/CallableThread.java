@@ -1,4 +1,4 @@
-package com.boilerplate.server.test.threadpool;
+package com.boilerplate.server.concurrent;
 
 import lombok.extern.slf4j.Slf4j;
 

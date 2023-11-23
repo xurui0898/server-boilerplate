@@ -1,7 +1,7 @@
-package com.boilerplate.server.test;
+package com.boilerplate.server.concurrent;
 
-import com.boilerplate.server.test.threadpool.CallableThread;
-import com.boilerplate.server.test.threadpool.RunnableThread;
+import com.boilerplate.server.concurrent.CallableThread;
+import com.boilerplate.server.concurrent.RunnableThread;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

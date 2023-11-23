@@ -1,12 +1,7 @@
 package com.boilerplate.server.controller;
 
-import com.boilerplate.server.entity.ApiResult;
-import com.boilerplate.server.utils.Response;
-import com.boilerplate.server.test.ThreadService;
-import com.google.gson.Gson;
+import com.boilerplate.server.concurrent.ThreadService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,15 +12,10 @@ import java.util.List;
 @RestController
 @Slf4j
 public class MultiThreadController {
-    @Autowired
-    private ThreadService threadService;
 
-    /**
-     * 多线程任务
-     * @return
-     */
-    @RequestMapping("/multhread/test")
-    public ApiResult<List<Integer>> test() {
+    public static void main(String[] args) {
+        ThreadService threadService = new ThreadService();
+
         log.info("多线程任务开始...");
         //无返回值多线程
         threadService.runnableThread();
@@ -33,8 +23,6 @@ public class MultiThreadController {
         List<Integer> callableData = threadService.callableThread();
         log.info("多线程任务结束...");
 
-        ApiResult<List<Integer>> apiResult = Response.makeOKRsp(callableData);
-        log.info("apiResult={}",new Gson().toJson(apiResult));
-        return apiResult;
+        log.info("apiResult={}",callableData);
     }
 }
