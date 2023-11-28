@@ -1,5 +1,6 @@
 package com.boilerplate.server.concurrent;
 
+import com.boilerplate.server.concurrent.entity.UserInfo;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -91,5 +92,41 @@ public class MultiThreadService {
         }
 
         return data;
+    }
+
+    /**
+     * 有返回值的多线程测试（使用completeFuture获取返回值）
+     * @return
+     */
+    public UserInfo completeFutureTest() {
+        long startTime = System.currentTimeMillis();
+        Long userId = 1846L;
+
+        //使用CompletableFuture实现多线程
+        try {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserId(userId);
+            CompleteFutureTest completeFutureTest = new CompleteFutureTest();
+
+            //获取用户手机号
+            CompletableFuture<Void> mobileFuture = CompletableFuture.supplyAsync(() -> {
+                return completeFutureTest.getUserMobile(userId);
+            }).thenAccept(userInfo::setMobile);
+            //获取用户地址
+            CompletableFuture<Void> addressFuture = CompletableFuture.supplyAsync(() -> {
+                return completeFutureTest.getUserAddress(userId);
+            }).thenAccept(userInfo::setAddress);
+            //获取用户昵称
+            CompletableFuture<Void> nicknameFuture = CompletableFuture.supplyAsync(() -> {
+                return completeFutureTest.getUserNickname(userId);
+            }).thenAccept(userInfo::setNickname);
+
+            //使用allOf方法，线程都执行完成前一直阻塞
+            CompletableFuture.allOf(mobileFuture, addressFuture, nicknameFuture).join();
+
+            return userInfo;
+        } finally {
+            System.out.println("completeFutureTest 总共用时=" + (System.currentTimeMillis() - startTime) + "ms");
+        }
     }
 }

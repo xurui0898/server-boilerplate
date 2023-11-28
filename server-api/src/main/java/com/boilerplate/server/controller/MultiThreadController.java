@@ -1,6 +1,7 @@
 package com.boilerplate.server.controller;
 
 import com.boilerplate.server.concurrent.MultiThreadService;
+import com.boilerplate.server.concurrent.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,10 @@ public class MultiThreadController {
         multiThreadService.runnableTest();
         //有返回值多线程
         List<Integer> callableData = multiThreadService.callableTest();
+        //CompleteFuture实现返回值多线程
+        UserInfo userInfo = multiThreadService.completeFutureTest();
 
-        log.info("多线程返回结果={}",callableData);
+        log.info("多线程callableTest 返回结果={}",callableData);
+        log.info("多线程completeFutureTest 返回结果={}",userInfo);
     }
 }
