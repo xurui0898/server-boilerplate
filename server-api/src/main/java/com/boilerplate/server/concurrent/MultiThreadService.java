@@ -110,7 +110,11 @@ public class MultiThreadService {
 
             //获取用户手机号
             CompletableFuture<Void> mobileFuture = CompletableFuture.supplyAsync(() -> {
-                return completeFutureTest.getUserMobile(userId);
+                try {
+                    return completeFutureTest.getUserMobile(userId);
+                } catch (Exception e) {
+                    return null;
+                }
             }).thenAccept(userInfo::setMobile);
             //获取用户地址
             CompletableFuture<Void> addressFuture = CompletableFuture.supplyAsync(() -> {
