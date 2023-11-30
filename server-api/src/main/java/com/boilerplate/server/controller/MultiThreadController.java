@@ -21,10 +21,13 @@ public class MultiThreadController {
         multiThreadService.runnableTest();
         //有返回值多线程
         List<Integer> callableData = multiThreadService.callableTest();
-        //CompleteFuture实现返回值多线程
+        //CompleteFuture实现返回值多线程（推荐方式）
         UserInfo userInfo = multiThreadService.completeFutureTest();
+        //countDownLatch实现返回值多线程
+        UserInfo userInfo2 = multiThreadService.countDownLatchTest();
 
         log.info("多线程callableTest 返回结果={}",callableData);
         log.info("多线程completeFutureTest 返回结果={}",userInfo);
+        log.info("多线程countDownLatchTest 返回结果={}",userInfo2);
     }
 }

@@ -133,4 +133,54 @@ public class MultiThreadService {
             System.out.println("completeFutureTest 总共用时=" + (System.currentTimeMillis() - startTime) + "ms");
         }
     }
+
+    /**
+     * countDownLatch实现返回值多线程
+     * @return
+     */
+    public UserInfo countDownLatchTest() {
+        long startTime = System.currentTimeMillis();
+        Long userId = 1846L;
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+
+        try {
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserId(userId);
+            CompleteFutureTest completeFutureTest = new CompleteFutureTest();
+            CountDownLatch countDownLatch = new CountDownLatch(3);
+
+            //获取用户手机号
+            executor.execute(() -> {
+                try {
+                    String mobile = completeFutureTest.getUserMobile(userId);
+                    userInfo.setMobile(mobile);
+                } catch (RuntimeException e) {
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+            //获取用户地址
+            executor.execute(() -> {
+                String address = completeFutureTest.getUserAddress(userId);
+                userInfo.setAddress(address);
+                countDownLatch.countDown();
+            });
+            //获取用户昵称
+            executor.execute(() -> {
+                String nickname = completeFutureTest.getUserNickname(userId);
+                userInfo.setNickname(nickname);
+                countDownLatch.countDown();
+            });
+            //唤醒主线程
+            countDownLatch.await();
+
+            return userInfo;
+        } catch (InterruptedException e) {
+            return null;
+        } finally {
+            //关闭线程池
+            executor.shutdown();
+            System.out.println("countDownLatchTest 总共用时=" + (System.currentTimeMillis() - startTime) + "ms");
+        }
+    }
 }
