@@ -32,8 +32,8 @@ import java.util.Optional;
  */
 @RestController
 @Slf4j
-@RequestMapping("test-user")
-public class TestUserController {
+@RequestMapping("user")
+public class UserController {
     @Autowired
     private TestUserService testUserService;
     @DubboReference
