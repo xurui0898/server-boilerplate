@@ -113,6 +113,7 @@ public class MultiThreadService {
                 try {
                     return completeFutureTest.getUserMobile(userId);
                 } catch (Exception e) {
+                    System.out.println(e.getMessage());
                     return null;
                 }
             }).thenAccept(userInfo::setMobile);
@@ -130,7 +131,7 @@ public class MultiThreadService {
 
             return userInfo;
         } finally {
-            System.out.println("completeFutureTest 总共用时=" + (System.currentTimeMillis() - startTime) + "ms");
+            System.out.println("completeFutureTest 执行总耗时=" + (System.currentTimeMillis() - startTime) + "ms");
         }
     }
 
