@@ -10,9 +10,8 @@ dubbo:
     name: dubbo
     port: -1
   registry:
-    address: nacos://localhost:8848?username=nacos&password=nacos1024
-    parameters.namespace: 31eb021a-8887-4425-b403-6bcbf6b8fefc
     register-mode: instance
+    address: nacos://localhost:8848?namespace=31eb021a-8887-4425-b403-6bcbf6b8fefc
 
 mybatis-plus:
   #配置MyBatis的xml配置文件路径

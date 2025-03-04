@@ -11,9 +11,7 @@ import com.boilerplate.server.model.TestUser;
 import com.boilerplate.server.service.TestUserService;
 import com.boilerplate.server.utils.Response;
 import com.boilerplate.server.utils.ValidatorUtils;
-import com.dubbo.learning.service.LearningUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,8 +34,6 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private TestUserService testUserService;
-    @DubboReference
-    private LearningUserService learningUserService;
 
     @RequestMapping("userList")
     public ApiResult<ApiList<TestUserVo>> userList(Short cityID, Integer page, Integer pageSize) {
@@ -68,13 +64,6 @@ public class UserController {
 
         //根据城市ID查询用户，Mybatis-Plus框架
         ApiList<MpTestUser> userData = testUserService.getMpListByCity(cityID,page,pageSize);
-        return Response.makeOKRsp(userData);
-    }
-
-    @RequestMapping("dubboUserInfo")
-    public ApiResult<String> dubboUserInfo(Long userId) {
-        //通过Dubbo调用服务
-        String userData = learningUserService.getUserInfo(userId);
         return Response.makeOKRsp(userData);
     }
 
