@@ -32,11 +32,3 @@
 ## 日志处理 —— logback
 
 无它，唯一需要配置的就是日志输出位置，此脚手架中支持在SpringBoot中配置日志输出位置，这种配置对开发测试阶段更加友好，避免了日志文件满天飞的情况。
-
-## 部署与发布
-
-使用docker构建Java8环境，将server-api打包jar文件映射到容器内/app.jar即可。
-
-参考文档以beta环境打包为例，因为beta环境配置的MySQL链接是宿主机的IP。
-
-参考文档：[Dockerfile构建java8环境](https://www.yuque.com/docs/share/6b1dedf2-615b-42cf-91b3-47427b5db71b) 
